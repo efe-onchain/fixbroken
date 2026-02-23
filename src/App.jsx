@@ -2,7 +2,7 @@ import { useState } from 'react'
 import './App.css'
 
 const CALENDLY_URL = 'https://calendly.com/daniel-joinanvil/30min'
-const SHEET_URL = '' // Paste your Google Apps Script web app URL here
+const SHEET_URL = 'https://script.google.com/macros/s/AKfycby7YupguaO55A_GT_D1GsC9GZ_QLtcmlaZgnlmUBvr8uk3-m2c0GJD943M3wakrjB8P/exec'
 
 function App() {
   const [modalOpen, setModalOpen] = useState(false)
