@@ -1,8 +1,30 @@
+import { useState } from 'react'
 import './App.css'
 
-const FORM_URL = 'https://tally.so' // Replace with your actual form URL
+const CALENDLY_URL = 'https://calendly.com/daniel-joinanvil/30min'
 
 function App() {
+  const [modalOpen, setModalOpen] = useState(false)
+  const [email, setEmail] = useState('')
+  const [isValid, setIsValid] = useState(false)
+
+  const handleEmailChange = (e) => {
+    const val = e.target.value
+    setEmail(val)
+    setIsValid(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val))
+  }
+
+  const handleBook = () => {
+    const saved = JSON.parse(localStorage.getItem('fb_leads') || '[]')
+    saved.push({ email, ts: new Date().toISOString() })
+    localStorage.setItem('fb_leads', JSON.stringify(saved))
+
+    window.open(`${CALENDLY_URL}?email=${encodeURIComponent(email)}`, '_blank')
+    setModalOpen(false)
+    setEmail('')
+    setIsValid(false)
+  }
+
   return (
     <div className="page">
       <div className="glow" />
@@ -14,9 +36,9 @@ function App() {
           <div className="logo-icon">fb</div>
           fixbroken
         </div>
-        <a className="nav-link" href={FORM_URL} target="_blank" rel="noopener noreferrer">
+        <button className="nav-link" onClick={() => setModalOpen(true)}>
           Get help &rarr;
-        </a>
+        </button>
       </nav>
 
       {/* Hero */}
@@ -38,17 +60,10 @@ function App() {
         </p>
 
         <div className="cta-group">
-          <a href={FORM_URL} target="_blank" rel="noopener noreferrer">
-            <button className="btn-primary">
-              Get your app fixed
-              <span>&rarr;</span>
-            </button>
-          </a>
-          <a href="mailto:hello@fixbroken.dev">
-            <button className="btn-secondary">
-              Talk to us
-            </button>
-          </a>
+          <button className="btn-primary" onClick={() => setModalOpen(true)}>
+            Get your app fixed
+            <span>&rarr;</span>
+          </button>
         </div>
 
         <div className="proof">
@@ -71,6 +86,37 @@ function App() {
           </div>
         </div>
       </main>
+
+      {/* Modal */}
+      {modalOpen && (
+        <div className="modal-overlay" onClick={() => setModalOpen(false)}>
+          <div className="modal" onClick={(e) => e.stopPropagation()}>
+            <button className="modal-close" onClick={() => setModalOpen(false)}>
+              &times;
+            </button>
+            <h2 className="modal-title">Book a call</h2>
+            <p className="modal-desc">
+              Enter your email and we&rsquo;ll get you on the calendar.
+            </p>
+            <input
+              className="modal-input"
+              type="email"
+              placeholder="you@company.com"
+              value={email}
+              onChange={handleEmailChange}
+              autoFocus
+              onKeyDown={(e) => e.key === 'Enter' && isValid && handleBook()}
+            />
+            <button
+              className="btn-primary modal-btn"
+              disabled={!isValid}
+              onClick={handleBook}
+            >
+              Book &rarr;
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
