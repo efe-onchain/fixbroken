@@ -76,7 +76,7 @@ function App() {
           <span className="proof-label">Trusted by teams shipping with AI</span>
           <div className="proof-stats">
             <div className="stat">
-              <span className="stat-value">48h</span>
+              <span className="stat-value">1-4h</span>
               <span className="stat-label">Avg turnaround</span>
             </div>
             <div className="stat-divider" />
