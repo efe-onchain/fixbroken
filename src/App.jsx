@@ -15,9 +15,9 @@ function App() {
   }
 
   const handleBook = () => {
-    const saved = JSON.parse(localStorage.getItem('fb_leads') || '[]')
+    const saved = JSON.parse(localStorage.getItem('anvil_leads') || '[]')
     saved.push({ email, ts: new Date().toISOString() })
-    localStorage.setItem('fb_leads', JSON.stringify(saved))
+    localStorage.setItem('anvil_leads', JSON.stringify(saved))
 
     window.open(`${CALENDLY_URL}?email=${encodeURIComponent(email)}`, '_blank')
     setModalOpen(false)
@@ -33,8 +33,8 @@ function App() {
       {/* Nav */}
       <nav className="nav">
         <div className="logo">
-          <div className="logo-icon">fb</div>
-          fixbroken
+          <div className="logo-icon">A</div>
+          Anvil
         </div>
         <button className="nav-link" onClick={() => setModalOpen(true)}>
           Get help &rarr;
