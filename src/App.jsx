@@ -1,8 +1,72 @@
 import { useState } from 'react'
+import { motion, AnimatePresence } from 'motion/react'
 import './App.css'
 
 const CALENDLY_URL = 'https://calendly.com/daniel-joinanvil/30min'
 const SHEET_URL = 'https://script.google.com/macros/s/AKfycby7YupguaO55A_GT_D1GsC9GZ_QLtcmlaZgnlmUBvr8uk3-m2c0GJD943M3wakrjB8P/exec'
+
+const ORB_CONFIG = [
+  { x: '15%', y: '20%', size: 400, color: 'rgba(108,99,255,0.06)', duration: 25 },
+  { x: '75%', y: '60%', size: 350, color: 'rgba(167,139,250,0.05)', duration: 30 },
+  { x: '50%', y: '80%', size: 300, color: 'rgba(99,140,255,0.04)', duration: 20 },
+]
+
+function FloatingOrbs() {
+  return (
+    <div className="orbs">
+      {ORB_CONFIG.map((orb, i) => (
+        <motion.div
+          key={i}
+          className="orb"
+          style={{
+            left: orb.x,
+            top: orb.y,
+            width: orb.size,
+            height: orb.size,
+            background: `radial-gradient(circle, ${orb.color} 0%, transparent 70%)`,
+          }}
+          animate={{
+            x: [0, 30, -20, 10, 0],
+            y: [0, -25, 15, -10, 0],
+            scale: [1, 1.1, 0.95, 1.05, 1],
+          }}
+          transition={{
+            duration: orb.duration,
+            repeat: Infinity,
+            ease: 'easeInOut',
+          }}
+        />
+      ))}
+    </div>
+  )
+}
+
+function Particles() {
+  return (
+    <div className="particles">
+      {Array.from({ length: 20 }, (_, i) => (
+        <motion.div
+          key={i}
+          className="particle"
+          style={{
+            left: `${Math.random() * 100}%`,
+            top: `${Math.random() * 100}%`,
+          }}
+          animate={{
+            y: [0, -30 - Math.random() * 40, 0],
+            opacity: [0, 0.6, 0],
+          }}
+          transition={{
+            duration: 4 + Math.random() * 6,
+            repeat: Infinity,
+            delay: Math.random() * 5,
+            ease: 'easeInOut',
+          }}
+        />
+      ))}
+    </div>
+  )
+}
 
 function App() {
   const [modalOpen, setModalOpen] = useState(false)
@@ -33,7 +97,13 @@ function App() {
 
   return (
     <div className="page">
-      <div className="glow" />
+      <FloatingOrbs />
+      <Particles />
+      <motion.div
+        className="glow"
+        animate={{ scale: [1, 1.15, 1], opacity: [0.5, 0.8, 0.5] }}
+        transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+      />
       <div className="grid-bg" />
 
       {/* Nav */}
@@ -49,30 +119,60 @@ function App() {
 
       {/* Hero */}
       <main className="hero">
-        <div className="badge">
+        <motion.div
+          className="badge"
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6 }}
+        >
           <span className="badge-dot" />
           Accepting new projects
-        </div>
+        </motion.div>
 
-        <h1 className="headline">
+        <motion.h1
+          className="headline"
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.1 }}
+        >
           Your AI app is broken.
           <br />
           <span className="headline-accent">We&rsquo;ll fix it.</span>
-        </h1>
+        </motion.h1>
 
-        <p className="subtitle">
+        <motion.p
+          className="subtitle"
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.2 }}
+        >
           We rescue, repair, and maintain apps built by AI tools.
           Ship with confidence&mdash;we handle the mess.
-        </p>
+        </motion.p>
 
-        <div className="cta-group">
-          <button className="btn-primary" onClick={() => setModalOpen(true)}>
+        <motion.div
+          className="cta-group"
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.3 }}
+        >
+          <motion.button
+            className="btn-primary"
+            onClick={() => setModalOpen(true)}
+            whileHover={{ scale: 1.03, y: -1 }}
+            whileTap={{ scale: 0.98 }}
+          >
             Get your app fixed
             <span>&rarr;</span>
-          </button>
-        </div>
+          </motion.button>
+        </motion.div>
 
-        <div className="proof">
+        <motion.div
+          className="proof"
+          initial={{ opacity: 0, y: 16 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.45 }}
+        >
           <span className="proof-label">Trusted by teams shipping with AI</span>
           <div className="proof-stats">
             <div className="stat">
@@ -90,39 +190,57 @@ function App() {
               <span className="stat-label">Lock-in</span>
             </div>
           </div>
-        </div>
+        </motion.div>
       </main>
 
       {/* Modal */}
-      {modalOpen && (
-        <div className="modal-overlay" onClick={() => setModalOpen(false)}>
-          <div className="modal" onClick={(e) => e.stopPropagation()}>
-            <button className="modal-close" onClick={() => setModalOpen(false)}>
-              &times;
-            </button>
-            <h2 className="modal-title">Book a call</h2>
-            <p className="modal-desc">
-              Enter your email and we&rsquo;ll get you on the calendar.
-            </p>
-            <input
-              className="modal-input"
-              type="email"
-              placeholder="you@company.com"
-              value={email}
-              onChange={handleEmailChange}
-              autoFocus
-              onKeyDown={(e) => e.key === 'Enter' && isValid && handleBook()}
-            />
-            <button
-              className="btn-primary modal-btn"
-              disabled={!isValid}
-              onClick={handleBook}
+      <AnimatePresence>
+        {modalOpen && (
+          <motion.div
+            className="modal-overlay"
+            onClick={() => setModalOpen(false)}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.2 }}
+          >
+            <motion.div
+              className="modal"
+              onClick={(e) => e.stopPropagation()}
+              initial={{ opacity: 0, scale: 0.95, y: 10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 10 }}
+              transition={{ duration: 0.25, ease: 'easeOut' }}
             >
-              Book &rarr;
-            </button>
-          </div>
-        </div>
-      )}
+              <button className="modal-close" onClick={() => setModalOpen(false)}>
+                &times;
+              </button>
+              <h2 className="modal-title">Book a call</h2>
+              <p className="modal-desc">
+                Enter your email and we&rsquo;ll get you on the calendar.
+              </p>
+              <input
+                className="modal-input"
+                type="email"
+                placeholder="you@company.com"
+                value={email}
+                onChange={handleEmailChange}
+                autoFocus
+                onKeyDown={(e) => e.key === 'Enter' && isValid && handleBook()}
+              />
+              <motion.button
+                className="btn-primary modal-btn"
+                disabled={!isValid}
+                onClick={handleBook}
+                whileHover={isValid ? { scale: 1.02 } : {}}
+                whileTap={isValid ? { scale: 0.98 } : {}}
+              >
+                Book &rarr;
+              </motion.button>
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
     </div>
   )
 }
