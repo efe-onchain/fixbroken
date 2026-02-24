@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import './App.css'
 
@@ -165,6 +165,13 @@ function App() {
   const [email, setEmail] = useState('')
   const [isValid, setIsValid] = useState(false)
   const [phraseIndex, setPhraseIndex] = useState(0)
+  const emailTracked = useRef(false)
+
+  const track = (event, params = {}) => {
+    if (typeof window.gtag === 'function') {
+      window.gtag('event', event, params)
+    }
+  }
 
   useEffect(() => {
     const id = setInterval(() => {
@@ -177,9 +184,14 @@ function App() {
     const val = e.target.value
     setEmail(val)
     setIsValid(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val))
+    if (!emailTracked.current && val.length > 0) {
+      emailTracked.current = true
+      track('email_input_started', { source: fromAd ? 'ad' : 'organic' })
+    }
   }
 
   const handleBook = () => {
+    track('book_submitted', { source: fromAd ? 'ad' : 'organic' })
     if (SHEET_URL) {
       fetch(SHEET_URL, {
         method: 'POST',
@@ -212,7 +224,7 @@ function App() {
           <div className="logo-icon">A</div>
           Anvil
         </div>
-        <button className="nav-link" onClick={() => setModalOpen(true)}>
+        <button className="nav-link" onClick={() => { track('cta_click', { button: 'get_help' }); setModalOpen(true) }}>
           Get help &rarr;
         </button>
       </nav>
@@ -285,7 +297,7 @@ function App() {
         >
           <motion.button
             className="btn-primary"
-            onClick={() => setModalOpen(true)}
+            onClick={() => { track('cta_click', { button: 'get_app_fixed' }); setModalOpen(true) }}
             whileHover={{ scale: 1.03, y: -1 }}
             whileTap={{ scale: 0.98 }}
           >
