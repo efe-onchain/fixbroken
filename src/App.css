@@ -302,6 +302,54 @@
   border-color: rgba(108, 99, 255, 0.5);
 }
 
+/* ── Ad modal variant ── */
+.modal-ad {
+  max-width: 460px;
+}
+
+.modal-ad-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 12px;
+  border: 1px solid rgba(108, 99, 255, 0.4);
+  border-radius: 100px;
+  font-size: 11px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent);
+  background: rgba(108, 99, 255, 0.08);
+  margin-bottom: 4px;
+}
+
+.modal-ad-title {
+  font-size: 1.6rem !important;
+  line-height: 1.15 !important;
+}
+
+.modal-ad-perks {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 4px 0;
+  font-size: 15px;
+  color: var(--text-primary);
+}
+
+.perk-check {
+  color: #34d399;
+  font-weight: 700;
+  margin-right: 10px;
+}
+
+.modal-ad-cta-label {
+  font-size: 13px;
+  color: var(--text-secondary);
+  margin-bottom: -4px;
+}
+
 .modal-btn {
   width: 100%;
   justify-content: center;

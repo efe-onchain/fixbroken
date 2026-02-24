@@ -160,9 +160,8 @@ function Features() {
 const HEADLINE_PHRASES = ["We'll fix it.", 'We will deploy it.', 'We will maintain it.']
 
 function App() {
-  const [modalOpen, setModalOpen] = useState(
-    () => new URLSearchParams(window.location.search).get('book') === 'true'
-  )
+  const fromAd = new URLSearchParams(window.location.search).get('book') === 'true'
+  const [modalOpen, setModalOpen] = useState(() => fromAd)
   const [email, setEmail] = useState('')
   const [isValid, setIsValid] = useState(false)
   const [phraseIndex, setPhraseIndex] = useState(0)
@@ -336,7 +335,7 @@ function App() {
             transition={{ duration: 0.2 }}
           >
             <motion.div
-              className="modal"
+              className={`modal${fromAd ? ' modal-ad' : ''}`}
               onClick={(e) => e.stopPropagation()}
               initial={{ opacity: 0, scale: 0.95, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -346,10 +345,31 @@ function App() {
               <button className="modal-close" onClick={() => setModalOpen(false)}>
                 &times;
               </button>
-              <h2 className="modal-title">Book a call</h2>
-              <p className="modal-desc">
-                Enter your email and we&rsquo;ll get you on the calendar.
-              </p>
+
+              {fromAd ? (
+                <>
+                  <div className="modal-ad-badge">From broken to live</div>
+                  <h2 className="modal-title modal-ad-title">
+                    We&rsquo;ll take production<br />off your plate.
+                  </h2>
+                  <p className="modal-desc">
+                    Your app works locally. We make it work for everyone else &mdash; and keep it that way.
+                  </p>
+                  <ul className="modal-ad-perks">
+                    <li><span className="perk-check">✓</span> Cloud deployment &amp; domain setup</li>
+                    <li><span className="perk-check">✓</span> 24/7 uptime monitoring</li>
+                    <li><span className="perk-check">✓</span> Bugs fixed fast, usually within hours</li>
+                  </ul>
+                  <p className="modal-ad-cta-label">Drop your email &mdash; we&rsquo;ll reach out same day.</p>
+                </>
+              ) : (
+                <>
+                  <h2 className="modal-title">Book a call</h2>
+                  <p className="modal-desc">
+                    Enter your email and we&rsquo;ll get you on the calendar.
+                  </p>
+                </>
+              )}
               <input
                 className="modal-input"
                 type="email"
@@ -366,7 +386,7 @@ function App() {
                 whileHover={isValid ? { scale: 1.02 } : {}}
                 whileTap={isValid ? { scale: 0.98 } : {}}
               >
-                Book &rarr;
+                {fromAd ? 'Get started →' : 'Book →'}
               </motion.button>
             </motion.div>
           </motion.div>
