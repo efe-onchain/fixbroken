@@ -9,7 +9,7 @@ const LOGOS = [
   { name: 'Google',   src: 'https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg' },
   { name: 'AWS',      src: 'https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg' },
   { name: 'Azure',    src: 'https://upload.wikimedia.org/wikipedia/commons/a/a8/Microsoft_Azure_Logo.svg' },
-  { name: 'Lovable',  src: 'https://logo.clearbit.com/lovable.dev' },
+  { name: 'Lovable',  src: 'https://upload.wikimedia.org/wikipedia/commons/b/be/Lovable_Logo_%2B_Wordmark_Black.png' },
   { name: 'Replit',   src: 'https://upload.wikimedia.org/wikipedia/commons/b/b2/Repl.it_logo.svg' },
   { name: 'Base44',   src: 'https://logo.clearbit.com/base44.com' },
   { name: 'Bold',     src: 'https://logo.clearbit.com/bold.new' },
