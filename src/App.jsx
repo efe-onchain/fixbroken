@@ -103,19 +103,19 @@ const FEATURES = [
     img: '/deploy.png',
     title: 'Ship to the Cloud',
     label: 'Deploy',
-    body: 'We take your code and deploy it on robust cloud infrastructure — configure domains, provision SSL, tune for performance, and ensure your app is always available and scales effortlessly as you grow.',
+    body: 'Your code, live on the cloud. We handle domains, SSL, and infrastructure so your app is fast, reliable, and ready to scale.',
   },
   {
     img: '/monitor.png',
     title: '24/7 Monitoring',
     label: 'Monitor',
-    body: 'We keep a close eye on everything that matters — uptime, response times, error rates, and infrastructure health. Your users get a seamless experience around the clock. You get peace of mind.',
+    body: 'We watch your app around the clock. Uptime checks, error alerts, and performance tracking — so your users never hit a wall.',
   },
   {
     img: '/bugfix.png',
     title: 'Bugs Fixed Fast',
     label: 'Fix',
-    body: 'Shipping with AI tools moves fast — bugs are inevitable. We catch, diagnose, and patch them before they become customer problems, keeping your product polished and your users happy.',
+    body: 'Bugs happen. We catch them first. Fast diagnosis, fast fixes — your product stays polished and your users stay happy.',
   },
 ]
 
