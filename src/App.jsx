@@ -162,10 +162,13 @@ const HEADLINE_PHRASES = ["We'll fix it.", 'We will deploy it.', 'We will mainta
 function App() {
   const fromAd = new URLSearchParams(window.location.search).get('book') === 'true'
   const [modalOpen, setModalOpen] = useState(() => fromAd)
+  const [isExitIntent, setIsExitIntent] = useState(false)
+  const showAdModal = fromAd || isExitIntent
   const [email, setEmail] = useState('')
   const [isValid, setIsValid] = useState(false)
   const [phraseIndex, setPhraseIndex] = useState(0)
   const emailTracked = useRef(false)
+  const exitFired = useRef(false)
 
   const track = (event, params = {}) => {
     if (typeof window.gtag === 'function') {
@@ -180,18 +183,30 @@ function App() {
     return () => clearInterval(id)
   }, [])
 
+  useEffect(() => {
+    const handler = (e) => {
+      if (exitFired.current || e.clientY > 20) return
+      exitFired.current = true
+      setIsExitIntent(true)
+      setModalOpen(true)
+      track('exit_intent')
+    }
+    document.addEventListener('mouseleave', handler)
+    return () => document.removeEventListener('mouseleave', handler)
+  }, [])
+
   const handleEmailChange = (e) => {
     const val = e.target.value
     setEmail(val)
     setIsValid(/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(val))
     if (!emailTracked.current && val.length > 0) {
       emailTracked.current = true
-      track('email_input_started', { source: fromAd ? 'ad' : 'organic' })
+      track('email_input_started', { source: fromAd ? 'ad' : isExitIntent ? 'exit_intent' : 'organic' })
     }
   }
 
   const handleBook = () => {
-    track('book_submitted', { source: fromAd ? 'ad' : 'organic' })
+    track('book_submitted', { source: fromAd ? 'ad' : isExitIntent ? 'exit_intent' : 'organic' })
     if (SHEET_URL) {
       fetch(SHEET_URL, {
         method: 'POST',
@@ -341,15 +356,15 @@ function App() {
           <motion.div
             className="modal-overlay"
             onClick={() => setModalOpen(false)}
-            initial={fromAd ? { opacity: 1 } : { opacity: 0 }}
+            initial={showAdModal ? { opacity: 1 } : { opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
             transition={{ duration: 0.2 }}
           >
             <motion.div
-              className={`modal${fromAd ? ' modal-ad' : ''}`}
+              className={`modal${showAdModal ? ' modal-ad' : ''}`}
               onClick={(e) => e.stopPropagation()}
-              initial={fromAd ? { opacity: 1, scale: 1, y: 0 } : { opacity: 0, scale: 0.95, y: 10 }}
+              initial={showAdModal ? { opacity: 1, scale: 1, y: 0 } : { opacity: 0, scale: 0.95, y: 10 }}
               animate={{ opacity: 1, scale: 1, y: 0 }}
               exit={{ opacity: 0, scale: 0.95, y: 10 }}
               transition={{ duration: 0.25, ease: 'easeOut' }}
@@ -358,7 +373,7 @@ function App() {
                 &times;
               </button>
 
-              {fromAd ? (
+              {showAdModal ? (
                 <>
                   <div className="modal-ad-badge">From broken to live</div>
                   <h2 className="modal-title modal-ad-title">
@@ -398,7 +413,7 @@ function App() {
                 whileHover={isValid ? { scale: 1.02 } : {}}
                 whileTap={isValid ? { scale: 0.98 } : {}}
               >
-                {fromAd ? 'Get started →' : 'Book →'}
+                {showAdModal ? 'Get started →' : 'Book →'}
               </motion.button>
             </motion.div>
           </motion.div>
