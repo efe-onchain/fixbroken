@@ -98,6 +98,68 @@ function LogoTicker() {
   )
 }
 
+const FEATURES = [
+  {
+    img: '/deploy.png',
+    title: 'Ship to the Cloud',
+    label: 'Deploy',
+    body: 'We take your code and deploy it on robust cloud infrastructure — configure domains, provision SSL, tune for performance, and ensure your app is always available and scales effortlessly as you grow.',
+  },
+  {
+    img: '/monitor.png',
+    title: '24/7 Monitoring',
+    label: 'Monitor',
+    body: 'We keep a close eye on everything that matters — uptime, response times, error rates, and infrastructure health. Your users get a seamless experience around the clock. You get peace of mind.',
+  },
+  {
+    img: '/bugfix.png',
+    title: 'Bugs Fixed Fast',
+    label: 'Fix',
+    body: 'Shipping with AI tools moves fast — bugs are inevitable. We catch, diagnose, and patch them before they become customer problems, keeping your product polished and your users happy.',
+  },
+]
+
+function Features() {
+  return (
+    <section className="features">
+      <motion.div
+        className="features-header"
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-60px' }}
+        transition={{ duration: 0.6 }}
+      >
+        <span className="features-eyebrow">What we do</span>
+        <h2 className="features-title">Everything your app needs<br />to go from code to production</h2>
+      </motion.div>
+
+      <div className="features-grid">
+        {FEATURES.map((f, i) => (
+          <motion.div
+            key={f.label}
+            className="feature-card"
+            initial={{ opacity: 0, y: 48 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.55, delay: i * 0.12, ease: 'easeOut' }}
+            whileHover={{ y: -6, transition: { duration: 0.25 } }}
+          >
+            <div className="feature-img-wrap">
+              <img src={f.img} alt={f.title} className="feature-img" />
+              <div className="feature-img-fade" />
+            </div>
+            <div className="feature-body">
+              <span className="feature-label">{f.label}</span>
+              <h3 className="feature-card-title">{f.title}</h3>
+              <p className="feature-card-desc">{f.body}</p>
+            </div>
+          </motion.div>
+        ))}
+      </div>
+    </section>
+  )
+}
+
 const HEADLINE_PHRASES = ["We'll fix it.", 'We will deploy it.', 'We will maintain it.']
 
 function App() {
@@ -258,6 +320,8 @@ function App() {
           </div>
         </motion.div>
       </main>
+
+      <Features />
 
       <LogoTicker />
 
