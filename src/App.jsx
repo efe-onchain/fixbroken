@@ -5,6 +5,16 @@ import './App.css'
 const CALENDLY_URL = 'https://calendly.com/daniel-joinanvil/30min'
 const SHEET_URL = 'https://script.google.com/macros/s/AKfycby7YupguaO55A_GT_D1GsC9GZ_QLtcmlaZgnlmUBvr8uk3-m2c0GJD943M3wakrjB8P/exec'
 
+const LOGOS = [
+  { name: 'Google',   src: 'https://upload.wikimedia.org/wikipedia/commons/2/2f/Google_2015_logo.svg' },
+  { name: 'AWS',      src: 'https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg' },
+  { name: 'Azure',    src: 'https://upload.wikimedia.org/wikipedia/commons/a/a8/Microsoft_Azure_Logo.svg' },
+  { name: 'Lovable',  src: 'https://logo.clearbit.com/lovable.dev' },
+  { name: 'Replit',   src: 'https://upload.wikimedia.org/wikipedia/commons/b/b2/Repl.it_logo.svg' },
+  { name: 'Base44',   src: 'https://logo.clearbit.com/base44.com' },
+  { name: 'Bold',     src: 'https://logo.clearbit.com/bold.new' },
+]
+
 const ORB_CONFIG = [
   { x: '15%', y: '20%', size: 400, color: 'rgba(108,99,255,0.06)', duration: 25 },
   { x: '75%', y: '60%', size: 350, color: 'rgba(167,139,250,0.05)', duration: 30 },
@@ -64,6 +74,27 @@ function Particles() {
           }}
         />
       ))}
+    </div>
+  )
+}
+
+function LogoTicker() {
+  const doubled = [...LOGOS, ...LOGOS]
+  return (
+    <div className="logo-ticker-section">
+      <span className="logo-ticker-label">Trusted by teams<br />shipping with AI</span>
+      <div className="logo-ticker-wrapper">
+        <div className="logo-ticker-track">
+          {doubled.map((logo, i) => (
+            <img
+              key={i}
+              src={logo.src}
+              alt={logo.name}
+              className="logo-ticker-img"
+            />
+          ))}
+        </div>
+      </div>
     </div>
   )
 }
@@ -187,7 +218,6 @@ function App() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.45 }}
         >
-          <span className="proof-label">Trusted by teams shipping with AI</span>
           <div className="proof-stats">
             <div className="stat">
               <span className="stat-value">1-4h</span>
@@ -206,6 +236,8 @@ function App() {
           </div>
         </motion.div>
       </main>
+
+      <LogoTicker />
 
       {/* Modal */}
       <AnimatePresence>
