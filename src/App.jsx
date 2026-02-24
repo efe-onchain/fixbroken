@@ -10,7 +10,7 @@ const LOGOS = [
   { name: 'AWS',      src: 'https://upload.wikimedia.org/wikipedia/commons/9/93/Amazon_Web_Services_Logo.svg' },
   { name: 'Azure',    src: 'https://upload.wikimedia.org/wikipedia/commons/a/a8/Microsoft_Azure_Logo.svg' },
   { name: 'Lovable',  src: 'https://upload.wikimedia.org/wikipedia/commons/b/be/Lovable_Logo_%2B_Wordmark_Black.png' },
-  { name: 'Replit',   src: 'https://cdn.sanity.io/images/bj34pdbp/migration/3c2f2d404a571d2c9fbca934360352698d63433a-1920x900.png?w=1920&q=75&fit=clip&auto=format' },
+  { name: 'Replit',   src: 'https://mma.prnewswire.com/media/2725892/Replit_Logo.jpg?w=200' },
   { name: 'Base44',   src: 'https://assets.sonary.com/wp-content/uploads/2025/08/18115434/Base44_l.svg' },
 ]
 
