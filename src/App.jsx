@@ -175,6 +175,12 @@ function App() {
     return () => clearInterval(id)
   }, [])
 
+  useEffect(() => {
+    if (new URLSearchParams(window.location.search).get('book') === 'true') {
+      setModalOpen(true)
+    }
+  }, [])
+
   const handleEmailChange = (e) => {
     const val = e.target.value
     setEmail(val)
