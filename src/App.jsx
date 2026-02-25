@@ -83,38 +83,70 @@ function Particles() {
   )
 }
 
-function TechTicker() {
-  const doubled = [...TECH_LOGOS, ...TECH_LOGOS]
+function TechStack() {
   return (
-    <div className="tech-ticker-outer">
+    <section className="tech-stack">
       <motion.div
-        className="tech-ticker-header"
-        initial={{ opacity: 0, y: 20 }}
+        className="tech-stack-header"
+        initial={{ opacity: 0, y: 24 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true, margin: '-40px' }}
         transition={{ duration: 0.55 }}
       >
-        <h2 className="tech-ticker-title">We handle the complexity.<br />You stay focused on building.</h2>
-        <p className="tech-ticker-desc">Whatever stack your AI tool generated, we know how to deploy it, wire it up, and keep it running — no DevOps degree required.</p>
+        <span className="features-eyebrow">Any stack</span>
+        <h2 className="features-title">We handle the complexity.<br />You stay focused on building.</h2>
+        <p className="tech-stack-desc">Whatever your AI tool generated — we know how to deploy it, wire it up, and keep it running. No DevOps degree required.</p>
       </motion.div>
-    <div className="tech-ticker-section">
-      <span className="logo-ticker-label">Works with<br />your stack</span>
-      <div className="logo-ticker-wrapper">
-        <div className="logo-ticker-track">
-          {doubled.map((logo, i) => (
-            <img
-              key={i}
-              src={logo.src}
-              alt={logo.name}
-              className="logo-ticker-img tech-ticker-img"
-              style={logo.height ? { height: logo.height } : undefined}
-            />
-          ))}
-        </div>
+      <div className="tech-stack-grid">
+        {TECH_LOGOS.map((logo, i) => (
+          <motion.div
+            key={logo.name}
+            className="tech-stack-item"
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-20px' }}
+            transition={{ duration: 0.4, delay: i * 0.07 }}
+          >
+            <img src={logo.src} alt={logo.name} className="tech-stack-logo" />
+            <span className="tech-stack-name">{logo.name}</span>
+          </motion.div>
+        ))}
       </div>
-    </div>
+    </section>
+  )
+}
+
+function SkyOverlay() {
+  return (
+    <div className="sky-overlay">
+      <div className="sun" />
+      <div className="cloud cloud-1" />
+      <div className="cloud cloud-2" />
+      <div className="cloud cloud-3" />
     </div>
   )
+}
+
+function useTheme() {
+  const timer = useRef(null)
+  useEffect(() => {
+    const setTheme = (t) => document.documentElement.setAttribute('data-theme', t)
+    const onActivity = () => {
+      setTheme('dark')
+      clearTimeout(timer.current)
+      timer.current = setTimeout(() => setTheme('light'), 3000)
+    }
+    window.addEventListener('mousemove', onActivity)
+    window.addEventListener('scroll', onActivity, { passive: true })
+    window.addEventListener('keydown', onActivity)
+    timer.current = setTimeout(() => setTheme('light'), 3000)
+    return () => {
+      clearTimeout(timer.current)
+      window.removeEventListener('mousemove', onActivity)
+      window.removeEventListener('scroll', onActivity)
+      window.removeEventListener('keydown', onActivity)
+    }
+  }, [])
 }
 
 function LogoTicker() {
@@ -208,6 +240,7 @@ const HEADLINES = {
 }
 
 function App() {
+  useTheme()
   const fromAd = new URLSearchParams(window.location.search).get('book') === 'true'
   const [modalOpen, setModalOpen] = useState(() => fromAd)
   const [isExitIntent, setIsExitIntent] = useState(false)
@@ -268,6 +301,7 @@ function App() {
 
   return (
     <div className="page">
+      <SkyOverlay />
       <FloatingOrbs />
       <Particles />
       <motion.div
@@ -345,7 +379,7 @@ function App() {
             whileHover={{ scale: 1.03, y: -1 }}
             whileTap={{ scale: 0.98 }}
           >
-            Get your app fixed
+            Get your app live
             <span>&rarr;</span>
           </motion.button>
         </motion.div>
@@ -377,7 +411,7 @@ function App() {
 
       <Features />
 
-      <TechTicker />
+      <TechStack />
 
       <LogoTicker />
 

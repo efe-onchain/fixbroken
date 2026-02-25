@@ -29,6 +29,18 @@ body {
   color: var(--text-primary);
   line-height: 1.6;
   overflow-x: hidden;
+  transition: background-color 1s ease, color 0.6s ease;
+}
+
+[data-theme="light"] {
+  --bg: #deeeff;
+  --surface: #ffffff;
+  --border: rgba(0, 0, 0, 0.1);
+  --text-primary: #0f172a;
+  --text-secondary: #64748b;
+  --accent: #6c63ff;
+  --accent-hover: #5a52e8;
+  --accent-glow: rgba(108, 99, 255, 0.2);
 }
 
 a {

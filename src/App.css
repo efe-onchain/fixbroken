@@ -544,6 +544,227 @@
   margin: 0;
 }
 
+/* ── Tech stack section ── */
+.tech-stack {
+  position: relative;
+  z-index: 1;
+  padding: 80px 48px;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+.tech-stack-header {
+  text-align: center;
+  margin-bottom: 56px;
+}
+
+.tech-stack-desc {
+  margin-top: 16px;
+  font-size: 1rem;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  max-width: 560px;
+  margin-left: auto;
+  margin-right: auto;
+  text-wrap: balance;
+}
+
+.tech-stack-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 20px;
+}
+
+.tech-stack-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  padding: 28px 16px;
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  transition: border-color 0.3s, background 0.3s;
+}
+
+.tech-stack-item:hover {
+  border-color: rgba(108, 99, 255, 0.35);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.tech-stack-logo {
+  height: 44px;
+  width: auto;
+  object-fit: contain;
+}
+
+.tech-stack-name {
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--text-secondary);
+  text-align: center;
+}
+
+/* ── Sky overlay (light theme) ── */
+.sky-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  opacity: 0;
+  transition: opacity 1.2s ease;
+  overflow: hidden;
+}
+
+[data-theme="light"] .sky-overlay {
+  opacity: 1;
+}
+
+.sun {
+  position: absolute;
+  top: -100px;
+  right: 8%;
+  width: 300px;
+  height: 300px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff9c4 0%, #ffd54f 35%, rgba(255, 200, 0, 0.25) 65%, transparent 100%);
+  filter: blur(3px);
+  animation: sun-pulse 7s ease-in-out infinite;
+}
+
+@keyframes sun-pulse {
+  0%, 100% { transform: scale(1); opacity: 0.85; }
+  50% { transform: scale(1.06); opacity: 1; }
+}
+
+.cloud {
+  position: absolute;
+  background: white;
+  border-radius: 60px;
+  opacity: 0.75;
+  filter: blur(1px);
+}
+
+.cloud::before,
+.cloud::after {
+  content: '';
+  position: absolute;
+  background: white;
+  border-radius: 50%;
+}
+
+.cloud-1 {
+  width: 200px;
+  height: 56px;
+  top: 18%;
+  animation: cloud-drift 45s linear infinite;
+}
+.cloud-1::before {
+  width: 100px;
+  height: 80px;
+  top: -42px;
+  left: 28px;
+}
+.cloud-1::after {
+  width: 76px;
+  height: 60px;
+  top: -30px;
+  left: 88px;
+}
+
+.cloud-2 {
+  width: 160px;
+  height: 48px;
+  top: 40%;
+  animation: cloud-drift 62s linear infinite;
+  animation-delay: -20s;
+}
+.cloud-2::before {
+  width: 80px;
+  height: 64px;
+  top: -34px;
+  left: 18px;
+}
+.cloud-2::after {
+  width: 60px;
+  height: 48px;
+  top: -24px;
+  left: 68px;
+}
+
+.cloud-3 {
+  width: 240px;
+  height: 68px;
+  top: 62%;
+  animation: cloud-drift 52s linear infinite;
+  animation-delay: -32s;
+}
+.cloud-3::before {
+  width: 120px;
+  height: 96px;
+  top: -50px;
+  left: 38px;
+}
+.cloud-3::after {
+  width: 90px;
+  height: 72px;
+  top: -36px;
+  left: 108px;
+}
+
+@keyframes cloud-drift {
+  from { transform: translateX(-320px); }
+  to   { transform: translateX(calc(100vw + 320px)); }
+}
+
+/* ── Light mode overrides ── */
+[data-theme="light"] .logo-ticker-section {
+  background: rgba(255, 255, 255, 0.85);
+  border-top-color: rgba(0, 0, 0, 0.1);
+}
+
+[data-theme="light"] .logo-ticker-img {
+  filter: brightness(0);
+  opacity: 0.5;
+}
+
+[data-theme="light"] .feature-img-fade {
+  background: linear-gradient(to bottom, transparent 40%, rgba(255, 255, 255, 0.85) 100%);
+}
+
+[data-theme="light"] .grid-bg {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(0, 0, 0, 0.04) 1px, transparent 1px);
+}
+
+[data-theme="light"] .glow {
+  background: radial-gradient(
+    circle,
+    rgba(108, 99, 255, 0.06) 0%,
+    transparent 70%
+  );
+}
+
+[data-theme="light"] .particle {
+  background: rgba(0, 0, 0, 0.15);
+}
+
+[data-theme="light"] .nav {
+  border-bottom-color: rgba(0, 0, 0, 0.1);
+  background: rgba(222, 238, 255, 0.7);
+  backdrop-filter: blur(12px);
+}
+
+[data-theme="light"] .feature-card {
+  background: rgba(255, 255, 255, 0.6);
+}
+
+[data-theme="light"] .tech-stack-item {
+  background: rgba(255, 255, 255, 0.6);
+}
+
 /* ── Tech stack ticker (inline) ── */
 .tech-ticker-outer {
   position: relative;
