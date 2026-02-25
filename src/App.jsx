@@ -545,7 +545,7 @@ const FREE_INCLUDED = [
 ]
 
 const RATES = [
-  { label: 'Cloud server', price: 29, desc: 'Per server, per month', icon: '☁' },
+  { label: 'Cloud server', price: 29, desc: 'Per server/mo · 10% off per server added (up to 50%)', icon: '☁' },
   { label: 'Database',     price: 19, desc: 'Per database, per month', icon: '🗄' },
 ]
 
@@ -627,9 +627,13 @@ function PriceCalc({ onCta }) {
   const [servers, setServers] = useState(1)
   const [dbs, setDbs] = useState(1)
 
-  const serverPrice = servers * 29
+  const discountPct = Math.min((servers - 1) * 10, 50)
+  const discountedRate = parseFloat((29 * (1 - discountPct / 100)).toFixed(2))
+  const serverPrice = parseFloat((servers * discountedRate).toFixed(2))
   const dbPrice = dbs * 19
-  const total = serverPrice + dbPrice
+  const total = parseFloat((serverPrice + dbPrice).toFixed(2))
+  const fullServerPrice = servers * 29
+  const savings = parseFloat((fullServerPrice - serverPrice).toFixed(2))
 
   return (
     <div className="calc-wrap">
@@ -655,6 +659,12 @@ function PriceCalc({ onCta }) {
               className="calc-slider"
             />
             <div className="calc-range-labels"><span>1</span><span>10</span></div>
+            {discountPct > 0 && (
+              <div className="calc-discount-badge">
+                {discountPct}% volume discount applied
+                {discountPct >= 50 && ' (max)'}
+              </div>
+            )}
           </div>
 
           <div className="calc-slider-group">
@@ -674,13 +684,22 @@ function PriceCalc({ onCta }) {
         <div className="calc-right">
           <div className="calc-breakdown">
             <div className="calc-line muted"><span>Dashboard, monitoring, fixes</span><span className="calc-free">Free</span></div>
-            <div className="calc-line"><span>{servers} server{servers > 1 ? 's' : ''} × $29</span><span>${serverPrice}</span></div>
+            <div className="calc-line">
+              <span>
+                {servers} server{servers > 1 ? 's' : ''} × ${discountedRate}
+                {discountPct > 0 && <span className="calc-was"> (was $29)</span>}
+              </span>
+              <span>${serverPrice}</span>
+            </div>
             <div className="calc-line"><span>{dbs} database{dbs > 1 ? 's' : ''} × $19</span><span>${dbPrice}</span></div>
             <div className="calc-total-line" />
             <div className="calc-total">
               <span>Your monthly cost</span>
               <span className="calc-total-price">${total}<span className="calc-mo">/mo</span></span>
             </div>
+            {savings > 0 && (
+              <div className="calc-savings">You save ${savings}/mo</div>
+            )}
           </div>
           <button className="btn-primary calc-cta" onClick={onCta}>
             Get started →
