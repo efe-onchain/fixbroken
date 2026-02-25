@@ -21,6 +21,7 @@ const TECH_LOGOS = [
   { name: 'GitHub',     src: 'https://upload.wikimedia.org/wikipedia/commons/c/c2/GitHub_Invertocat_Logo.svg' },
   { name: 'PostgreSQL', src: 'https://upload.wikimedia.org/wikipedia/commons/2/29/Postgresql_elephant.svg' },
   { name: 'MySQL',      src: 'https://upload.wikimedia.org/wikipedia/en/d/dd/MySQL_logo.svg' },
+  { name: 'and more', src: null },
 ]
 
 const ORB_CONFIG = [
@@ -101,14 +102,20 @@ function TechStack() {
         {TECH_LOGOS.map((logo, i) => (
           <motion.div
             key={logo.name}
-            className="tech-stack-item"
+            className={`tech-stack-item${logo.src === null ? ' tech-stack-more' : ''}`}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, margin: '-20px' }}
             transition={{ duration: 0.4, delay: i * 0.07 }}
           >
-            <img src={logo.src} alt={logo.name} className="tech-stack-logo" />
-            <span className="tech-stack-name">{logo.name}</span>
+            {logo.src === null ? (
+              <span className="tech-stack-more-text">+ more</span>
+            ) : (
+              <>
+                <img src={logo.src} alt={logo.name} className="tech-stack-logo" />
+                <span className="tech-stack-name">{logo.name}</span>
+              </>
+            )}
           </motion.div>
         ))}
       </div>

@@ -607,6 +607,19 @@
   text-align: center;
 }
 
+.tech-stack-more {
+  border-style: dashed;
+  justify-content: center;
+}
+
+.tech-stack-more-text {
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--text-secondary);
+  opacity: 0.5;
+  letter-spacing: 0.02em;
+}
+
 /* ── Sky overlay (light theme) ── */
 .sky-overlay {
   position: fixed;
