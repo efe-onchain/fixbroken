@@ -11,6 +11,7 @@ const LOGOS = [
   { name: 'Azure',    src: 'https://upload.wikimedia.org/wikipedia/commons/a/a8/Microsoft_Azure_Logo.svg' },
   { name: 'Lovable',  src: 'https://upload.wikimedia.org/wikipedia/commons/b/be/Lovable_Logo_%2B_Wordmark_Black.png', height: 48 },
   { name: 'Base44',   src: 'https://assets.sonary.com/wp-content/uploads/2025/08/18115434/Base44_l.svg' },
+  { name: 'React',    src: 'https://upload.wikimedia.org/wikipedia/commons/3/30/React_Logo_SVG.svg' },
 ]
 
 const ORB_CONFIG = [
