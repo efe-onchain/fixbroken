@@ -708,9 +708,41 @@ const HEADLINES = {
   b: 'Take your AI app live.',
 }
 
+function Nav({ page, setPage, onCta }) {
+  return (
+    <nav className="nav">
+      <button className="logo" onClick={() => setPage('home')} style={{ background: 'none', border: 'none', cursor: 'pointer', fontFamily: 'inherit' }}>
+        <CloudLogo className="logo-icon" />
+        Anvil
+      </button>
+      <div className="nav-links">
+        <button className={`nav-link${page === 'home' ? ' nav-link--on' : ''}`} onClick={() => setPage('home')}>Home</button>
+        <button className={`nav-link${page === 'pricing' ? ' nav-link--on' : ''}`} onClick={() => setPage('pricing')}>Pricing</button>
+        <button className="nav-link nav-link--cta" onClick={onCta}>Get started &rarr;</button>
+      </div>
+    </nav>
+  )
+}
+
+function PricingPage({ onCta }) {
+  return (
+    <>
+      <motion.div
+        initial={{ opacity: 0, y: 24 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+      >
+        <Pricing onCta={onCta} />
+        <PriceCalc onCta={onCta} />
+      </motion.div>
+    </>
+  )
+}
+
 function App() {
   useTheme()
   const fromAd = new URLSearchParams(window.location.search).get('book') === 'true'
+  const [page, setPage] = useState('home')
   const [modalOpen, setModalOpen] = useState(() => fromAd)
   const [isExitIntent, setIsExitIntent] = useState(false)
   const showAdModal = fromAd || isExitIntent
@@ -724,6 +756,8 @@ function App() {
       window.gtag('event', event, params)
     }
   }
+
+  const openModal = (btn) => { track('cta_click', { button: btn }); setModalOpen(true) }
 
   useEffect(() => {
     track('headline_variant_shown', { variant: HEADLINE_VARIANT, headline: HEADLINES[HEADLINE_VARIANT] })
@@ -740,6 +774,9 @@ function App() {
     document.addEventListener('mouseleave', handler)
     return () => document.removeEventListener('mouseleave', handler)
   }, [])
+
+  // Scroll to top on page change
+  useEffect(() => { window.scrollTo(0, 0) }, [page])
 
   const handleEmailChange = (e) => {
     const val = e.target.value
@@ -780,114 +817,115 @@ function App() {
       />
       <div className="grid-bg" />
 
-      {/* Nav */}
-      <nav className="nav">
-        <div className="logo">
-          <CloudLogo className="logo-icon" />
-          Anvil
-        </div>
-        <button className="nav-link" onClick={() => { track('cta_click', { button: 'get_help' }); setModalOpen(true) }}>
-          Get help &rarr;
-        </button>
-      </nav>
+      <Nav page={page} setPage={setPage} onCta={() => openModal('nav')} />
 
-      {/* Hero */}
-      <main className="hero">
-        <motion.div
-          className="badge"
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6 }}
-        >
-          <span className="badge-dot" />
-          Accepting new projects
-        </motion.div>
+      <AnimatePresence mode="wait">
+        {page === 'pricing' ? (
+          <motion.div key="pricing" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
+            <PricingPage onCta={() => openModal('pricing')} />
+          </motion.div>
+        ) : (
+          <motion.div key="home" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
+            {/* Hero */}
+            <main className="hero">
+              <motion.div
+                className="badge"
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6 }}
+              >
+                <span className="badge-dot" />
+                Accepting new projects
+              </motion.div>
 
-        <motion.div
-          className="yc-badge"
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.05 }}
-        >
-          <span className="yc-text">Backed by</span>
-          <svg className="yc-logo" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <rect width="32" height="32" rx="4" fill="#F26522"/>
-            <path d="M17.05 18.52V23.5H14.95V18.52L10 9.5H12.35L16 16.14L19.62 9.5H22L17.05 18.52Z" fill="white"/>
-          </svg>
-          <span className="yc-text">Combinator</span>
-        </motion.div>
+              <motion.div
+                className="yc-badge"
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.05 }}
+              >
+                <span className="yc-text">Backed by</span>
+                <svg className="yc-logo" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <rect width="32" height="32" rx="4" fill="#F26522"/>
+                  <path d="M17.05 18.52V23.5H14.95V18.52L10 9.5H12.35L16 16.14L19.62 9.5H22L17.05 18.52Z" fill="white"/>
+                </svg>
+                <span className="yc-text">Combinator</span>
+              </motion.div>
 
-        <motion.h1
-          className="headline"
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-        >
-          {HEADLINES[HEADLINE_VARIANT]}
-        </motion.h1>
+              <motion.h1
+                className="headline"
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.1 }}
+              >
+                {HEADLINES[HEADLINE_VARIANT]}
+              </motion.h1>
 
-        <motion.p
-          className="subtitle"
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.2 }}
-        >
-          Built it with AI? We&rsquo;ll put it online and keep it running.
-          No servers, no DevOps, no stress. Just share your link.
-        </motion.p>
+              <motion.p
+                className="subtitle"
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.2 }}
+              >
+                Built it with AI? We&rsquo;ll put it online and keep it running.
+                No servers, no DevOps, no stress. Just share your link.
+              </motion.p>
 
-        <motion.div
-          className="cta-group"
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.3 }}
-        >
-          <motion.button
-            className="btn-primary"
-            onClick={() => { track('cta_click', { button: 'get_app_fixed' }); setModalOpen(true) }}
-            whileHover={{ scale: 1.03, y: -1 }}
-            whileTap={{ scale: 0.98 }}
-          >
-            Get your app live
-            <span>&rarr;</span>
-          </motion.button>
-        </motion.div>
+              <motion.div
+                className="cta-group"
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.3 }}
+              >
+                <motion.button
+                  className="btn-primary"
+                  onClick={() => openModal('get_app_live')}
+                  whileHover={{ scale: 1.03, y: -1 }}
+                  whileTap={{ scale: 0.98 }}
+                >
+                  Get your app live
+                  <span>&rarr;</span>
+                </motion.button>
+                <button className="btn-secondary" onClick={() => setPage('pricing')}>
+                  See pricing
+                </button>
+              </motion.div>
 
-        <motion.div
-          className="proof"
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.45 }}
-        >
-          <div className="proof-stats">
-            <div className="stat">
-              <span className="stat-value">1-4h</span>
-              <span className="stat-label">Avg turnaround</span>
-            </div>
-            <div className="stat-divider" />
-            <div className="stat">
-              <span className="stat-value">100%</span>
-              <span className="stat-label">Code handoff</span>
-            </div>
-            <div className="stat-divider" />
-            <div className="stat">
-              <span className="stat-value">0</span>
-              <span className="stat-label">Lock-in</span>
-            </div>
-          </div>
-        </motion.div>
-      </main>
+              <motion.div
+                className="proof"
+                initial={{ opacity: 0, y: 16 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.6, delay: 0.45 }}
+              >
+                <div className="proof-stats">
+                  <div className="stat">
+                    <span className="stat-value">1-4h</span>
+                    <span className="stat-label">Avg turnaround</span>
+                  </div>
+                  <div className="stat-divider" />
+                  <div className="stat">
+                    <span className="stat-value">100%</span>
+                    <span className="stat-label">Code handoff</span>
+                  </div>
+                  <div className="stat-divider" />
+                  <div className="stat">
+                    <span className="stat-value">0</span>
+                    <span className="stat-label">Lock-in</span>
+                  </div>
+                </div>
+              </motion.div>
+            </main>
 
-      <HowItWorks />
-      <SectionDivider />
-      <TechStack />
-      <SectionDivider />
-      <AppMockup />
-      <SectionDivider />
-      <Features />
-      <SectionDivider />
-      <Pricing onCta={() => { track('cta_click', { button: 'pricing' }); setModalOpen(true) }} />
-      <PriceCalc onCta={() => { track('cta_click', { button: 'calc' }); setModalOpen(true) }} />
+            <HowItWorks />
+            <SectionDivider />
+            <TechStack />
+            <SectionDivider />
+            <AppMockup />
+            <SectionDivider />
+            <Features />
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       <LogoTicker />
 

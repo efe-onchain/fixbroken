@@ -95,6 +95,12 @@
   display: block;
 }
 
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
 .nav-link {
   font-size: 14px;
   font-family: inherit;
@@ -103,10 +109,29 @@
   border: none;
   cursor: pointer;
   transition: color 0.2s;
+  padding: 6px 12px;
+  border-radius: 8px;
 }
 
 .nav-link:hover {
   color: var(--text-primary);
+}
+
+.nav-link--on {
+  color: var(--text-primary);
+  background: rgba(255,255,255,0.06);
+}
+
+.nav-link--cta {
+  background: var(--accent);
+  color: #fff !important;
+  font-weight: 500;
+  padding: 7px 16px;
+  margin-left: 8px;
+}
+
+.nav-link--cta:hover {
+  background: var(--accent-hover);
 }
 
 /* ── Hero ── */
@@ -214,6 +239,28 @@
 
 .btn-primary:active {
   transform: translateY(0);
+}
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 12px 24px;
+  font-size: 15px;
+  font-weight: 500;
+  font-family: inherit;
+  color: var(--text-secondary);
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.btn-secondary:hover {
+  color: var(--text-primary);
+  border-color: rgba(108,99,255,0.4);
+  background: rgba(108,99,255,0.05);
 }
 
 /* ── Modal ── */
