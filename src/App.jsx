@@ -18,7 +18,9 @@ const TECH_LOGOS = [
   { name: 'Node.js', src: 'https://upload.wikimedia.org/wikipedia/commons/d/d9/Node.js_logo.svg' },
   { name: 'Python',  src: 'https://upload.wikimedia.org/wikipedia/commons/1/1f/Python_logo_01.svg' },
   { name: 'MongoDB', src: 'https://upload.wikimedia.org/wikipedia/en/5/5a/MongoDB_Fores-Green.svg' },
-  { name: 'GitHub',  src: 'https://upload.wikimedia.org/wikipedia/commons/c/c2/GitHub_Invertocat_Logo.svg' },
+  { name: 'GitHub',     src: 'https://upload.wikimedia.org/wikipedia/commons/c/c2/GitHub_Invertocat_Logo.svg' },
+  { name: 'PostgreSQL', src: 'https://upload.wikimedia.org/wikipedia/commons/2/29/Postgresql_elephant.svg' },
+  { name: 'MySQL',      src: 'https://upload.wikimedia.org/wikipedia/en/d/dd/MySQL_logo.svg' },
 ]
 
 const ORB_CONFIG = [
