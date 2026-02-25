@@ -1577,7 +1577,7 @@
 .pricing {
   position: relative;
   z-index: 1;
-  padding: 96px 48px 80px;
+  padding: 96px 48px 64px;
   max-width: 1100px;
   margin: 0 auto;
   width: 100%;
@@ -1585,93 +1585,40 @@
 
 .pricing-header {
   text-align: center;
-  margin-bottom: 56px;
+  margin-bottom: 64px;
 }
 
-.pricing-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 20px;
-  align-items: start;
+/* Free + rates layout */
+.pricing-model {
+  display: flex;
+  align-items: flex-start;
+  gap: 24px;
 }
 
-.pricing-card {
+.pricing-free-card {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: 20px;
-  padding: 32px 28px 28px;
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  position: relative;
-  transition: border-color 0.3s;
+  padding: 32px 28px;
+  flex: 0 0 280px;
 }
 
-.pricing-card--pop {
-  border-color: rgba(108, 99, 255, 0.55);
-  box-shadow: 0 0 48px rgba(108, 99, 255, 0.1);
-  padding-top: 44px;
-}
-
-.pricing-badge {
-  position: absolute;
-  top: -13px;
-  left: 50%;
-  transform: translateX(-50%);
-  background: var(--accent);
-  color: white;
+.pricing-free-label {
   font-size: 11px;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  padding: 4px 16px;
-  border-radius: 100px;
-  white-space: nowrap;
-}
-
-.pricing-name {
-  font-size: 13px;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.07em;
   color: var(--text-secondary);
-  margin-bottom: 20px;
-}
-
-.pricing-price-row {
-  display: flex;
-  align-items: baseline;
-  gap: 1px;
   margin-bottom: 10px;
 }
 
-.pricing-dollar {
-  font-size: 20px;
-  font-weight: 600;
-  color: var(--text-primary);
-  align-self: flex-start;
-  margin-top: 8px;
-}
-
-.pricing-amount {
-  font-size: 56px;
+.pricing-free-price {
+  font-size: 48px;
   font-weight: 700;
   letter-spacing: -0.04em;
   line-height: 1;
-  color: var(--text-primary);
-}
-
-.pricing-per {
-  font-size: 15px;
-  color: var(--text-secondary);
-  margin-left: 4px;
-}
-
-.pricing-desc {
-  font-size: 14px;
-  color: var(--text-secondary);
-  line-height: 1.55;
-  margin: 0 0 28px;
+  color: #34d399;
+  margin-bottom: 24px;
 }
 
 .pricing-features {
@@ -1679,8 +1626,6 @@
   display: flex;
   flex-direction: column;
   gap: 11px;
-  margin-bottom: 32px;
-  flex: 1;
 }
 
 .pricing-features li {
@@ -1698,49 +1643,100 @@
   flex-shrink: 0;
 }
 
-.pricing-cta {
-  width: 100%;
-  padding: 12px;
-  border-radius: 10px;
-  font-size: 15px;
-  font-weight: 500;
-  font-family: inherit;
-  cursor: pointer;
-  transition: all 0.2s;
+.pricing-plus {
+  font-size: 32px;
+  font-weight: 300;
+  color: var(--text-secondary);
+  opacity: 0.4;
+  padding-top: 40px;
+  flex-shrink: 0;
+}
+
+.pricing-rates {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.pricing-rate-card {
+  background: var(--surface);
   border: 1px solid var(--border);
-  background: transparent;
+  border-radius: 20px;
+  padding: 28px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.pricing-rate-icon {
+  font-size: 24px;
+  margin-bottom: 6px;
+  display: block;
+}
+
+.pricing-rate-label {
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-secondary);
+}
+
+.pricing-rate-price {
+  display: flex;
+  align-items: baseline;
+  gap: 1px;
+  margin: 4px 0;
+}
+
+.pricing-dollar {
+  font-size: 18px;
+  font-weight: 600;
+  color: var(--text-primary);
+  align-self: flex-start;
+  margin-top: 6px;
+}
+
+.pricing-amount {
+  font-size: 48px;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 1;
   color: var(--text-primary);
 }
 
-.pricing-cta:hover {
-  border-color: rgba(108, 99, 255, 0.45);
-  background: rgba(108, 99, 255, 0.07);
+.pricing-per {
+  font-size: 14px;
+  color: var(--text-secondary);
+  margin-left: 3px;
 }
 
-.pricing-cta--pop {
-  background: var(--accent);
-  border-color: var(--accent);
-  color: #fff;
-  box-shadow: 0 4px 20px var(--accent-glow);
+.pricing-rate-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
 }
 
-.pricing-cta--pop:hover {
-  background: var(--accent-hover);
-  border-color: var(--accent-hover);
+.pricing-rate-cta-card {
+  border-color: rgba(108,99,255,0.3);
+  background: rgba(108,99,255,0.04);
+  justify-content: center;
+  gap: 20px;
+}
+
+.pricing-rate-cta-text {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0;
 }
 
 @media (max-width: 640px) {
-  .pricing {
-    padding: 64px 20px 60px;
-  }
-
-  .pricing-grid {
-    grid-template-columns: 1fr;
-  }
-
-  .pricing-card--pop {
-    order: -1;
-  }
+  .pricing { padding: 64px 20px 48px; }
+  .pricing-model { flex-direction: column; }
+  .pricing-free-card { flex: none; width: 100%; }
+  .pricing-plus { display: none; }
+  .pricing-rates { grid-template-columns: 1fr; }
 }
 
 /* ── Logo ticker ── */

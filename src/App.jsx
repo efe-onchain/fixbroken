@@ -533,16 +533,103 @@ function HowItWorks() {
   )
 }
 
+const FREE_INCLUDED = [
+  'Dashboard & monitoring',
+  'Automatic deployments',
+  'Bug fixes & PRs',
+  'SSL + domain setup',
+  '24/7 uptime alerts',
+  'Agent code analysis',
+  'Secrets & env var management',
+  'Security audit (on signup)',
+]
+
+const RATES = [
+  { label: 'Cloud server', price: 29, desc: 'Per server, per month', icon: '☁' },
+  { label: 'Database',     price: 19, desc: 'Per database, per month', icon: '🗄' },
+]
+
+function Pricing({ onCta }) {
+  return (
+    <section className="pricing">
+      <motion.div
+        className="pricing-header"
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-60px' }}
+        transition={{ duration: 0.6 }}
+      >
+        <span className="features-eyebrow">Pricing</span>
+        <h2 className="features-title">Pay only for what you run</h2>
+        <p className="tech-stack-desc">The dashboard, monitoring, bug fixes, and deployments are all free. You only pay for the cloud infrastructure we run for you.</p>
+      </motion.div>
+
+      <div className="pricing-model">
+        {/* Free column */}
+        <motion.div
+          className="pricing-free-card"
+          initial={{ opacity: 0, y: 32 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true, margin: '-40px' }}
+          transition={{ duration: 0.5 }}
+        >
+          <div className="pricing-free-label">Always included</div>
+          <div className="pricing-free-price">Free</div>
+          <ul className="pricing-features">
+            {FREE_INCLUDED.map(f => (
+              <li key={f}><span className="pricing-check">✓</span>{f}</li>
+            ))}
+          </ul>
+        </motion.div>
+
+        <div className="pricing-plus">+</div>
+
+        {/* Rate cards */}
+        <div className="pricing-rates">
+          {RATES.map((r, i) => (
+            <motion.div
+              key={r.label}
+              className="pricing-rate-card"
+              initial={{ opacity: 0, y: 32 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: '-40px' }}
+              transition={{ duration: 0.5, delay: i * 0.1 }}
+            >
+              <span className="pricing-rate-icon">{r.icon}</span>
+              <div className="pricing-rate-label">{r.label}</div>
+              <div className="pricing-rate-price">
+                <span className="pricing-dollar">$</span>
+                <span className="pricing-amount">{r.price}</span>
+                <span className="pricing-per">/mo</span>
+              </div>
+              <div className="pricing-rate-desc">{r.desc}</div>
+            </motion.div>
+          ))}
+          <motion.div
+            className="pricing-rate-card pricing-rate-cta-card"
+            initial={{ opacity: 0, y: 32 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-40px' }}
+            transition={{ duration: 0.5, delay: 0.2 }}
+          >
+            <p className="pricing-rate-cta-text">Not sure what you need? Use the calculator below or just talk to us.</p>
+            <button className="btn-primary" style={{ width: '100%', justifyContent: 'center' }} onClick={onCta}>
+              Get a quote →
+            </button>
+          </motion.div>
+        </div>
+      </div>
+    </section>
+  )
+}
+
 function PriceCalc({ onCta }) {
   const [servers, setServers] = useState(1)
   const [dbs, setDbs] = useState(1)
 
   const serverPrice = servers * 29
   const dbPrice = dbs * 19
-  const base = 29
-  const total = base + serverPrice + dbPrice
-
-  const recommended = total <= 79 ? 'Starter' : total <= 249 ? 'Pro' : 'Scale'
+  const total = serverPrice + dbPrice
 
   return (
     <div className="calc-wrap">
@@ -555,7 +642,7 @@ function PriceCalc({ onCta }) {
       >
         <div className="calc-left">
           <div className="calc-title">Estimate your cost</div>
-          <p className="calc-sub">Drag the sliders to match your setup. We&rsquo;ll show you what fits.</p>
+          <p className="calc-sub">Tell us how many servers and databases your app uses. The rest is free.</p>
 
           <div className="calc-slider-group">
             <div className="calc-slider-label">
@@ -586,119 +673,21 @@ function PriceCalc({ onCta }) {
 
         <div className="calc-right">
           <div className="calc-breakdown">
-            <div className="calc-line"><span>Base plan</span><span>$29</span></div>
+            <div className="calc-line muted"><span>Dashboard, monitoring, fixes</span><span className="calc-free">Free</span></div>
             <div className="calc-line"><span>{servers} server{servers > 1 ? 's' : ''} × $29</span><span>${serverPrice}</span></div>
             <div className="calc-line"><span>{dbs} database{dbs > 1 ? 's' : ''} × $19</span><span>${dbPrice}</span></div>
             <div className="calc-total-line" />
             <div className="calc-total">
-              <span>Estimated total</span>
+              <span>Your monthly cost</span>
               <span className="calc-total-price">${total}<span className="calc-mo">/mo</span></span>
             </div>
           </div>
-          <div className="calc-rec">
-            Closest plan: <strong>{recommended}</strong>
-          </div>
           <button className="btn-primary calc-cta" onClick={onCta}>
-            Get an exact quote →
+            Get started →
           </button>
         </div>
       </motion.div>
     </div>
-  )
-}
-
-const PLANS = [
-  {
-    name: 'Starter',
-    price: 49,
-    desc: 'One app, live and looked after.',
-    features: [
-      '1 cloud server',
-      '1 database',
-      'Automatic deployments',
-      'Uptime monitoring',
-      'SSL + custom domain',
-    ],
-    cta: 'Get started',
-  },
-  {
-    name: 'Pro',
-    price: 149,
-    desc: 'For apps with real users that need active care.',
-    popular: true,
-    features: [
-      '3 cloud servers',
-      '2 databases',
-      '24/7 monitoring & alerts',
-      'Bug fixes included',
-      'Automatic deployments',
-      'Priority support',
-    ],
-    cta: 'Get started',
-  },
-  {
-    name: 'Scale',
-    price: 399,
-    desc: 'Multiple apps, full coverage, no limits.',
-    features: [
-      'Unlimited servers',
-      'Unlimited databases',
-      'Everything in Pro',
-      'Dedicated engineer',
-      '99.9% uptime SLA',
-    ],
-    cta: 'Talk to us',
-  },
-]
-
-function Pricing({ onCta }) {
-  return (
-    <section className="pricing">
-      <motion.div
-        className="pricing-header"
-        initial={{ opacity: 0, y: 24 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: '-60px' }}
-        transition={{ duration: 0.6 }}
-      >
-        <span className="features-eyebrow">Pricing</span>
-        <h2 className="features-title">Simple, predictable pricing</h2>
-        <p className="tech-stack-desc">No hidden fees. No infrastructure surprises. One flat monthly rate for a fully managed app.</p>
-      </motion.div>
-
-      <div className="pricing-grid">
-        {PLANS.map((plan, i) => (
-          <motion.div
-            key={plan.name}
-            className={`pricing-card${plan.popular ? ' pricing-card--pop' : ''}`}
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-40px' }}
-            transition={{ duration: 0.5, delay: i * 0.1 }}
-          >
-            {plan.popular && <div className="pricing-badge">Most popular</div>}
-            <div className="pricing-name">{plan.name}</div>
-            <div className="pricing-price-row">
-              <span className="pricing-dollar">$</span>
-              <span className="pricing-amount">{plan.price}</span>
-              <span className="pricing-per">/mo</span>
-            </div>
-            <p className="pricing-desc">{plan.desc}</p>
-            <ul className="pricing-features">
-              {plan.features.map(f => (
-                <li key={f}><span className="pricing-check">✓</span>{f}</li>
-              ))}
-            </ul>
-            <button
-              className={`pricing-cta${plan.popular ? ' pricing-cta--pop' : ''}`}
-              onClick={onCta}
-            >
-              {plan.cta}
-            </button>
-          </motion.div>
-        ))}
-      </div>
-    </section>
   )
 }
 
