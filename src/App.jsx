@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useId } from 'react'
 import { motion, AnimatePresence } from 'motion/react'
 import './App.css'
 
@@ -6,17 +6,31 @@ const CALENDLY_URL = 'https://calendly.com/daniel-joinanvil/30min'
 const SHEET_URL = 'https://script.google.com/macros/s/AKfycby7YupguaO55A_GT_D1GsC9GZ_QLtcmlaZgnlmUBvr8uk3-m2c0GJD943M3wakrjB8P/exec'
 
 function CloudLogo({ width = 34, className }) {
+  const uid = useId().replace(/:/g, '')
   const height = Math.round(width * 22 / 34)
   return (
     <svg className={className} width={width} height={height} viewBox="0 0 34 22" fill="none">
-      {/* Back cloud — semi-transparent */}
-      <ellipse cx="11" cy="15" rx="9"   ry="5.5" fill="#6c63ff" fillOpacity="0.5"/>
-      <circle  cx="7"  cy="11" r="5.5"          fill="#6c63ff" fillOpacity="0.5"/>
-      <circle  cx="15" cy="9"  r="6.5"          fill="#6c63ff" fillOpacity="0.5"/>
-      {/* Front cloud — solid */}
-      <ellipse cx="24" cy="15" rx="10"  ry="5.5" fill="#6c63ff"/>
-      <circle  cx="19" cy="11" r="6.5"          fill="#6c63ff"/>
-      <circle  cx="27" cy="8"  r="8"            fill="#6c63ff"/>
+      <defs>
+        {/* Mask cuts a gap around the front cloud so both shapes read as separate */}
+        <mask id={uid}>
+          <rect width="34" height="22" fill="white"/>
+          <ellipse cx="24" cy="15" rx="11.5" ry="7"   fill="black"/>
+          <circle  cx="19" cy="11" r="8"              fill="black"/>
+          <circle  cx="27" cy="8"  r="9.5"            fill="black"/>
+        </mask>
+      </defs>
+      {/* Back cloud */}
+      <g mask={`url(#${uid})`} fill="#6c63ff">
+        <ellipse cx="11" cy="15" rx="9"   ry="5.5"/>
+        <circle  cx="7"  cy="11" r="5.5"/>
+        <circle  cx="15" cy="9"  r="6.5"/>
+      </g>
+      {/* Front cloud */}
+      <g fill="#6c63ff">
+        <ellipse cx="24" cy="15" rx="10"  ry="5.5"/>
+        <circle  cx="19" cy="11" r="6.5"/>
+        <circle  cx="27" cy="8"  r="8"/>
+      </g>
     </svg>
   )
 }
@@ -136,7 +150,7 @@ function DeployPanel() {
 
       <div className="mp-steps">
         <div className="mp-step mp-done"><span className="mp-dot mp-dot--done">✓</span>Your app uses React + a Node.js backend</div>
-        <div className="mp-step mp-done"><span className="mp-dot mp-dot--done">✓</span>Found a database — Supabase</div>
+        <div className="mp-step mp-done"><span className="mp-dot mp-dot--done">✓</span>Found your database and environment variables</div>
         <div className="mp-step mp-done"><span className="mp-dot mp-dot--done">✓</span>Setting up your server in the cloud</div>
         <div className="mp-step mp-active"><span className="mp-dot mp-dot--active">●</span>Connecting your custom domain…</div>
         <div className="mp-step mp-muted"><span className="mp-dot mp-dot--muted">○</span>Turning on SSL so your users are secure</div>
@@ -271,17 +285,36 @@ function AppMockup() {
           ))}
         </div>
 
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={tab}
-            initial={{ opacity: 0, y: 6 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -6 }}
-            transition={{ duration: 0.18 }}
-          >
-            <Panel />
-          </motion.div>
-        </AnimatePresence>
+        <div className="mockup-content-wrap">
+          <AnimatePresence mode="wait">
+            <motion.div
+              key={tab}
+              className="mockup-panel-area"
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -6 }}
+              transition={{ duration: 0.18 }}
+            >
+              <Panel />
+            </motion.div>
+          </AnimatePresence>
+
+          {/* Progress nav */}
+          <div className="mockup-progress-nav">
+            {DEMO_TABS.map((t, i) => (
+              <button
+                key={i}
+                className={`mpn-step${tab === i ? ' mpn-step--on' : ''}${i < tab ? ' mpn-step--done' : ''}`}
+                onClick={() => setTab(i)}
+                title={t.label}
+              >
+                <span className="mpn-dot" />
+                <span className="mpn-label">{t.label}</span>
+                {i < DEMO_TABS.length - 1 && <span className="mpn-line" />}
+              </button>
+            ))}
+          </div>
+        </div>
       </motion.div>
     </section>
   )

@@ -612,6 +612,81 @@
   font-size: 15px;
 }
 
+/* ── Mockup content + progress nav ── */
+.mockup-content-wrap {
+  display: flex;
+  position: relative;
+}
+
+.mockup-panel-area {
+  flex: 1;
+  min-width: 0;
+}
+
+.mockup-progress-nav {
+  width: 140px;
+  flex-shrink: 0;
+  background: #ffffff;
+  border-left: 1px solid #e2e5eb;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  padding: 32px 20px;
+  gap: 0;
+}
+
+.mpn-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  width: 100%;
+  position: relative;
+}
+
+.mpn-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #e2e5eb;
+  border: 2px solid #e2e5eb;
+  flex-shrink: 0;
+  transition: all 0.25s;
+  display: block;
+}
+
+.mpn-step--on   .mpn-dot { background: #6c63ff; border-color: #6c63ff; box-shadow: 0 0 0 3px rgba(108,99,255,0.18); }
+.mpn-step--done .mpn-dot { background: #6c63ff; border-color: #6c63ff; }
+
+.mpn-label {
+  font-size: 12px;
+  font-weight: 500;
+  color: #9ca3af;
+  margin-top: 6px;
+  text-align: center;
+  width: 100%;
+  transition: color 0.2s;
+  font-family: inherit;
+}
+
+.mpn-step--on   .mpn-label { color: #111827; font-weight: 600; }
+.mpn-step--done .mpn-label { color: #6b7280; }
+
+.mpn-line {
+  width: 2px;
+  height: 36px;
+  background: #e2e5eb;
+  display: block;
+  margin: 4px 0;
+  transition: background 0.3s;
+  border-radius: 2px;
+}
+
+.mpn-step--done .mpn-line { background: #6c63ff; }
+
 /* ── Demo tabs ── */
 .mockup-demotabs {
   display: flex;
