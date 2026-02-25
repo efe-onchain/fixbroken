@@ -157,7 +157,11 @@ function Features() {
   )
 }
 
-const HEADLINE_PHRASES = ["We'll fix it.", 'We will deploy it.', 'We will maintain it.']
+const HEADLINE_VARIANT = Math.random() < 0.5 ? 'a' : 'b'
+const HEADLINES = {
+  a: 'Your AI app, live on the internet.',
+  b: 'Take your AI app live.',
+}
 
 function App() {
   const fromAd = new URLSearchParams(window.location.search).get('book') === 'true'
@@ -166,7 +170,6 @@ function App() {
   const showAdModal = fromAd || isExitIntent
   const [email, setEmail] = useState('')
   const [isValid, setIsValid] = useState(false)
-  const [phraseIndex, setPhraseIndex] = useState(0)
   const emailTracked = useRef(false)
   const exitFired = useRef(false)
 
@@ -177,10 +180,7 @@ function App() {
   }
 
   useEffect(() => {
-    const id = setInterval(() => {
-      setPhraseIndex(i => (i + 1) % HEADLINE_PHRASES.length)
-    }, 2800)
-    return () => clearInterval(id)
+    track('headline_variant_shown', { variant: HEADLINE_VARIANT, headline: HEADLINES[HEADLINE_VARIANT] })
   }, [])
 
   useEffect(() => {
@@ -276,22 +276,7 @@ function App() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.1 }}
         >
-          Your AI app is broken.
-          <br />
-          <span className="headline-accent-wrap">
-            <AnimatePresence mode="wait">
-              <motion.span
-                key={phraseIndex}
-                className="headline-accent"
-                initial={{ opacity: 0, y: 10 }}
-                animate={{ opacity: 1, y: 0 }}
-                exit={{ opacity: 0, y: -10 }}
-                transition={{ duration: 0.35, ease: 'easeInOut' }}
-              >
-                {HEADLINE_PHRASES[phraseIndex]}
-              </motion.span>
-            </AnimatePresence>
-          </span>
+          {HEADLINES[HEADLINE_VARIANT]}
         </motion.h1>
 
         <motion.p
@@ -300,8 +285,8 @@ function App() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          We rescue, repair, deploy, and maintain apps built by AI tools.
-          Ship with confidence&mdash;we handle the mess.
+          Built it with AI? We&rsquo;ll put it online and keep it running.
+          No servers, no DevOps, no stress. Just share your link.
         </motion.p>
 
         <motion.div
