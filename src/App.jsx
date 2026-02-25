@@ -132,13 +132,12 @@ function useTheme() {
   useEffect(() => {
     const setTheme = (t) => document.documentElement.setAttribute('data-theme', t)
     const onActivity = () => {
-      clearTimeout(timer.current)
+      if (timer.current) return
       timer.current = setTimeout(() => setTheme('light'), 1000)
     }
     window.addEventListener('mousemove', onActivity)
     window.addEventListener('scroll', onActivity, { passive: true })
     window.addEventListener('keydown', onActivity)
-    timer.current = setTimeout(() => setTheme('light'), 1000)
     return () => {
       clearTimeout(timer.current)
       window.removeEventListener('mousemove', onActivity)
