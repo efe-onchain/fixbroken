@@ -544,6 +544,22 @@
   margin: 0;
 }
 
+/* ── Tech stack ticker (inline) ── */
+.tech-ticker-section {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  overflow: hidden;
+}
+
+.tech-ticker-img {
+  filter: brightness(0) invert(1);
+  opacity: 0.45;
+}
+
 /* ── Logo ticker ── */
 .logo-ticker-section {
   position: fixed;

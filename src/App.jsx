@@ -11,7 +11,14 @@ const LOGOS = [
   { name: 'Azure',    src: 'https://upload.wikimedia.org/wikipedia/commons/a/a8/Microsoft_Azure_Logo.svg' },
   { name: 'Lovable',  src: 'https://upload.wikimedia.org/wikipedia/commons/b/be/Lovable_Logo_%2B_Wordmark_Black.png', height: 48 },
   { name: 'Base44',   src: 'https://assets.sonary.com/wp-content/uploads/2025/08/18115434/Base44_l.svg' },
-  { name: 'React',    src: 'https://upload.wikimedia.org/wikipedia/commons/3/30/React_Logo_SVG.svg' },
+]
+
+const TECH_LOGOS = [
+  { name: 'React',   src: 'https://upload.wikimedia.org/wikipedia/commons/3/30/React_Logo_SVG.svg' },
+  { name: 'Node.js', src: 'https://upload.wikimedia.org/wikipedia/commons/d/d9/Node.js_logo.svg' },
+  { name: 'Python',  src: 'https://upload.wikimedia.org/wikipedia/commons/1/1f/Python_logo_01.svg' },
+  { name: 'MongoDB', src: 'https://upload.wikimedia.org/wikipedia/en/5/5a/MongoDB_Fores-Green.svg' },
+  { name: 'GitHub',  src: 'https://upload.wikimedia.org/wikipedia/commons/c/c2/GitHub_Invertocat_Logo.svg' },
 ]
 
 const ORB_CONFIG = [
@@ -70,6 +77,28 @@ function Particles() {
           transition={{ duration: p.duration, repeat: Infinity, delay: p.delay, ease: 'easeInOut' }}
         />
       ))}
+    </div>
+  )
+}
+
+function TechTicker() {
+  const doubled = [...TECH_LOGOS, ...TECH_LOGOS]
+  return (
+    <div className="tech-ticker-section">
+      <span className="logo-ticker-label">Works with<br />your stack</span>
+      <div className="logo-ticker-wrapper">
+        <div className="logo-ticker-track">
+          {doubled.map((logo, i) => (
+            <img
+              key={i}
+              src={logo.src}
+              alt={logo.name}
+              className="logo-ticker-img tech-ticker-img"
+              style={logo.height ? { height: logo.height } : undefined}
+            />
+          ))}
+        </div>
+      </div>
     </div>
   )
 }
@@ -333,6 +362,8 @@ function App() {
       </main>
 
       <Features />
+
+      <TechTicker />
 
       <LogoTicker />
 
