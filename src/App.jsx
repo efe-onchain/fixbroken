@@ -134,12 +134,12 @@ function useTheme() {
     const onActivity = () => {
       setTheme('dark')
       clearTimeout(timer.current)
-      timer.current = setTimeout(() => setTheme('light'), 3000)
+      timer.current = setTimeout(() => setTheme('light'), 1000)
     }
     window.addEventListener('mousemove', onActivity)
     window.addEventListener('scroll', onActivity, { passive: true })
     window.addEventListener('keydown', onActivity)
-    timer.current = setTimeout(() => setTheme('light'), 3000)
+    timer.current = setTimeout(() => setTheme('light'), 1000)
     return () => {
       clearTimeout(timer.current)
       window.removeEventListener('mousemove', onActivity)
