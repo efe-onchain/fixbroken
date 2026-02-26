@@ -932,8 +932,8 @@ function PriceCalc({ onCta }) {
 
 const HEADLINE_VARIANT = Math.random() < 0.5 ? 'a' : 'b'
 const HEADLINES = {
-  a: 'Your AI app, live on the internet.',
-  b: 'Take your AI app live.',
+  a: 'Your AI app, live. Zero buttons clicked.',
+  b: 'Your vibe code, live. Zero buttons clicked.',
 }
 
 function SignupGraphic() {
@@ -1192,8 +1192,8 @@ function HomePage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          Built it with AI but don&rsquo;t know how to put it online?
-          We handle everything — no technical skills needed.
+          Our agent reads your code and fires up the cloud for you.
+          No configuration, no tutorials, no settings.
         </motion.p>
 
         <motion.div
