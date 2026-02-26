@@ -2857,6 +2857,378 @@
   transform: translateY(-1px);
 }
 
+/* ── HowItWorksVisual ────────────────────────────────────────────────────── */
+.hiw-vis-wrap {
+  border-radius: 18px;
+  border: 1px solid rgba(255,255,255,0.08);
+  background: #111121;
+  overflow: hidden;
+  margin: 40px 0 48px;
+  max-width: 700px;
+}
+
+/* Tabs */
+.hiw-vis-tabs {
+  display: flex;
+  position: relative;
+  border-bottom: 1px solid rgba(255,255,255,0.07);
+}
+
+.hiw-vis-tab {
+  flex: 1;
+  padding: 14px 6px;
+  background: none;
+  border: none;
+  color: rgba(255,255,255,0.35);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  font-family: inherit;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  position: relative;
+  z-index: 1;
+  transition: color 0.2s;
+}
+.hiw-vis-tab--on  { color: white; }
+.hiw-vis-tab--done { color: #22c55e; }
+
+.hiw-vis-tab-num {
+  font-size: 10px;
+  opacity: 0.55;
+  font-variant-numeric: tabular-nums;
+}
+
+.hiw-vis-tab-bar {
+  position: absolute;
+  bottom: 0;
+  height: 2px;
+  background: #6c63ff;
+  border-radius: 2px 2px 0 0;
+}
+
+/* Progress strip */
+.hiw-vis-progress-track {
+  height: 2px;
+  background: rgba(255,255,255,0.05);
+  position: relative;
+}
+.hiw-vis-progress-track--top { /* no extra style needed */ }
+
+.hiw-vis-progress-fill { height: 100%; background: #6c63ff; }
+.hiw-vis-progress-fill--auto { /* animated via motion */ }
+
+/* Content */
+.hiw-vis-content {
+  height: 272px;
+  padding: 22px 24px;
+  display: flex;
+}
+
+.hiw-vis-panel-wrap {
+  width: 100%;
+  height: 100%;
+}
+
+/* Panel base */
+.hiw-vis-panel {
+  display: flex;
+  gap: 16px;
+  height: 100%;
+}
+.hiw-vis-panel--centered {
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.hiw-vis-panel--col {
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* ── Read panel ─────── */
+.hiw-vis-sidebar {
+  width: 136px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.hiw-vis-sidebar-title {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: rgba(255,255,255,0.28);
+  margin-bottom: 6px;
+}
+
+.hiw-vis-file {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-size: 12px;
+  color: rgba(255,255,255,0.55);
+  padding: 3px 6px;
+  border-radius: 6px;
+}
+
+.hiw-vis-icon-green { color: #22c55e; font-size: 11px; width: 14px; text-align: center; flex-shrink: 0; }
+
+.hiw-vis-code-wrap {
+  flex: 1;
+  background: rgba(0,0,0,0.35);
+  border-radius: 10px;
+  padding: 14px;
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.hiw-vis-scanner {
+  position: absolute;
+  left: 0; right: 0;
+  height: 2px;
+  background: rgba(108,99,255,0.7);
+  box-shadow: 0 0 10px rgba(108,99,255,0.5);
+  animation: hiw-scanner 2s ease-in-out infinite;
+}
+@keyframes hiw-scanner {
+  0%   { top: 0; opacity: 1; }
+  85%  { opacity: 1; }
+  100% { top: 100%; opacity: 0; }
+}
+
+.hiw-vis-code-lines { display: flex; flex-direction: column; gap: 5px; }
+
+.hiw-vis-code-line {
+  height: 7px;
+  border-radius: 4px;
+  background: rgba(255,255,255,0.08);
+  animation: hiw-fade-in 0.3s ease forwards;
+  opacity: 0;
+}
+@keyframes hiw-fade-in { to { opacity: 1; } }
+
+.hiw-vis-code-output {
+  margin-top: 10px;
+  border-top: 1px solid rgba(255,255,255,0.06);
+  padding-top: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  font-size: 11.5px;
+  color: rgba(255,255,255,0.45);
+  font-family: monospace;
+}
+
+.hiw-vis-scanning-line {
+  color: rgba(255,255,255,0.65);
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.hiw-vis-pulse-dot {
+  display: inline-block;
+  width: 6px; height: 6px;
+  border-radius: 50%;
+  background: #6c63ff;
+  animation: pulse-dot 1.2s ease-in-out infinite;
+}
+
+/* ── Cloud panel ─────── */
+.hiw-vis-cloud-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  width: 100%;
+}
+
+.hiw-vis-cloud-card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 10px;
+  padding: 14px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 7px;
+  font-size: 12.5px;
+  color: rgba(255,255,255,0.65);
+  text-align: center;
+}
+
+.hiw-vis-cloud-check {
+  width: 20px; height: 20px;
+  border-radius: 50%;
+  background: rgba(34,197,94,0.14);
+  border: 1px solid rgba(34,197,94,0.3);
+  color: #22c55e;
+  font-size: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Deploy panel ─────── */
+.hiw-vis-url-bar {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.08);
+  border-radius: 8px;
+  padding: 8px 14px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: rgba(255,255,255,0.65);
+}
+
+.hiw-vis-going-live {
+  margin-left: auto;
+  font-size: 11px;
+  color: #a78bfa;
+  background: rgba(108,99,255,0.15);
+  border: 1px solid rgba(108,99,255,0.25);
+  border-radius: 20px;
+  padding: 2px 10px;
+}
+
+.hiw-vis-progress-track {
+  height: 6px;
+  background: rgba(255,255,255,0.07);
+  border-radius: 3px;
+  overflow: hidden;
+}
+
+.hiw-vis-progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, #6c63ff, #a78bfa);
+  border-radius: 3px;
+}
+
+.hiw-vis-deploy-steps {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.hiw-vis-deploy-step {
+  font-size: 13px;
+  color: rgba(255,255,255,0.55);
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+/* ── Live panel ─────── */
+.hiw-vis-live-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.hiw-vis-live-dot {
+  width: 8px; height: 8px;
+  border-radius: 50%;
+  background: #22c55e;
+  box-shadow: 0 0 7px #22c55e;
+  animation: pulse-dot 1.5s ease-in-out infinite;
+}
+
+.hiw-vis-live-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: #22c55e;
+}
+
+.hiw-vis-live-url {
+  font-size: 13px;
+  color: rgba(255,255,255,0.35);
+}
+
+.hiw-vis-stats-row {
+  display: flex;
+  gap: 12px;
+}
+
+.hiw-vis-stat-card {
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.07);
+  border-radius: 10px;
+  padding: 12px 18px;
+  text-align: center;
+  flex: 1;
+}
+
+.hiw-vis-stat-val {
+  font-size: 20px;
+  font-weight: 700;
+  color: white;
+  line-height: 1;
+}
+
+.hiw-vis-stat-lbl {
+  font-size: 11px;
+  color: rgba(255,255,255,0.35);
+  margin-top: 4px;
+}
+
+.hiw-vis-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 3px;
+  flex: 1;
+  min-height: 0;
+}
+
+.hiw-vis-bar {
+  flex: 1;
+  background: rgba(108,99,255,0.45);
+  border-radius: 2px 2px 0 0;
+  min-height: 3px;
+}
+
+/* ── Preview section ─────── */
+.hiw-vis-preview {
+  border-top: 1px solid rgba(255,255,255,0.07);
+  padding: 20px 24px;
+}
+
+.hiw-vis-preview-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.8);
+  margin-bottom: 8px;
+}
+
+.hiw-vis-preview-icon { font-size: 16px; }
+
+.hiw-vis-preview-badge {
+  font-size: 10px;
+  font-weight: 600;
+  color: rgba(255,255,255,0.35);
+  background: rgba(255,255,255,0.07);
+  border-radius: 20px;
+  padding: 2px 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.hiw-vis-preview-desc {
+  font-size: 13px;
+  color: rgba(255,255,255,0.4);
+  line-height: 1.65;
+  margin: 0;
+}
+
 /* ── Nav user dropdown ───────────────────────────────────────────────────── */
 .nav-user-wrap {
   position: relative;

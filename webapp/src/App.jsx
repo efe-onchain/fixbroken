@@ -3,6 +3,7 @@ import { motion, AnimatePresence } from 'motion/react'
 import { Routes, Route, useNavigate, useLocation } from 'react-router-dom'
 import './App.css'
 import DashboardPage from './Dashboard.jsx'
+import HowItWorksVisual from './HowItWorksVisual.jsx'
 
 const CALENDLY_URL = 'https://calendly.com/daniel-joinanvil/30min'
 const API_URL = 'https://fixbroken-f36a.vercel.app'
@@ -699,8 +700,8 @@ function HowItWorks() {
 
       <div className="how-timeline">
         {HOW_PHASES.map((phase, i) => (
+          <Fragment key={phase.num}>
           <motion.div
-            key={phase.num}
             className="how-phase"
             initial={{ opacity: 0, y: 40 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -738,6 +739,8 @@ function HowItWorks() {
               )}
             </div>
           </motion.div>
+          {i === 0 && <HowItWorksVisual />}
+          </Fragment>
         ))}
       </div>
     </section>
