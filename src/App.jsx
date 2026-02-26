@@ -464,10 +464,22 @@ function SkyOverlay() {
   )
 }
 
-function useTheme() {
+function useTheme(pathname) {
   const timer = useRef(null)
   useEffect(() => {
     const setTheme = (t) => document.documentElement.setAttribute('data-theme', t)
+
+    if (pathname !== '/') {
+      clearTimeout(timer.current)
+      timer.current = null
+      setTheme('light')
+      return
+    }
+
+    // Homepage: start dark, switch to light after first activity
+    document.documentElement.removeAttribute('data-theme')
+    timer.current = null
+
     const onActivity = () => {
       if (timer.current) return
       timer.current = setTimeout(() => setTheme('light'), 1000)
@@ -477,11 +489,12 @@ function useTheme() {
     window.addEventListener('keydown', onActivity)
     return () => {
       clearTimeout(timer.current)
+      timer.current = null
       window.removeEventListener('mousemove', onActivity)
       window.removeEventListener('scroll', onActivity)
       window.removeEventListener('keydown', onActivity)
     }
-  }, [])
+  }, [pathname])
 }
 
 function LogoTicker() {
@@ -806,8 +819,8 @@ function Pricing({ onCta }) {
       </div>
 
       <div className="pricing-footnotes">
-        <p><sup>*</sup> Based on a Google Cloud e2-medium instance (2 vCPUs, 4 GB RAM). Price is per calendar month.</p>
-        <p><sup>†</sup> Based on a Google Cloud SQL managed database with 10 GB of storage.</p>
+        <p><sup>*</sup> 2 vCPUs, 4 GB RAM. Price is per calendar month.</p>
+        <p><sup>†</sup> Managed database with 10 GB of storage.</p>
       </div>
     </section>
   )
@@ -1087,7 +1100,8 @@ function AnimatedRoutes({ onCta }) {
 }
 
 function App() {
-  useTheme()
+  const { pathname } = useLocation()
+  useTheme(pathname)
   const fromAd = new URLSearchParams(window.location.search).get('book') === 'true'
   const [modalOpen, setModalOpen] = useState(() => fromAd)
   const [isExitIntent, setIsExitIntent] = useState(false)
