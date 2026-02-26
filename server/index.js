@@ -72,12 +72,15 @@ app.get('/auth/github/callback', async (req, res) => {
 
     // Log signup to Google Sheet
     if (process.env.SHEET_URL) {
+      // redirect: 'manual' — Apps Script returns a 302; the script has already run at that point.
+      // Following the redirect converts POST → GET and doPost() never fires.
       fetch(process.env.SHEET_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ name: ghUser.name || ghUser.login, email, login: ghUser.login, ts: new Date().toISOString(), source: 'github_oauth' }),
+        redirect: 'manual',
       })
-        .then(r => console.log('Sheet response:', r.status))
+        .then(r => console.log('Sheet response:', r.status, r.type))
         .catch(err => console.error('Sheet write failed:', err.message))
     } else {
       console.warn('SHEET_URL not set — skipping sheet log')
