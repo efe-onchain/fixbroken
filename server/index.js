@@ -67,6 +67,15 @@ app.get('/auth/github/callback', async (req, res) => {
       email = primary ? primary.email : emails[0]?.email
     }
 
+    // Log signup to Google Sheet
+    if (process.env.SHEET_URL) {
+      fetch(process.env.SHEET_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ name: ghUser.name || ghUser.login, email, login: ghUser.login, ts: new Date().toISOString(), source: 'github_oauth' }),
+      }).catch(() => {})
+    }
+
     // Issue a JWT with the user's GitHub info
     const payload = {
       sub: String(ghUser.id),
