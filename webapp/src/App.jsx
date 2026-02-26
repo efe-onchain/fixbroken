@@ -1191,8 +1191,8 @@ function HomePage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6, delay: 0.2 }}
         >
-          Built it with AI? We&rsquo;ll put it online and keep it running.
-          No servers, no DevOps, no stress. Just share your link.
+          Built it with AI but don&rsquo;t know how to put it online?
+          We handle everything — no technical skills needed. Just share your link.
         </motion.p>
 
         <motion.div
