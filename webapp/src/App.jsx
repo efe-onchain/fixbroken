@@ -772,6 +772,9 @@ function Pricing({ onCta }) {
         <span className="features-eyebrow">Pricing</span>
         <h2 className="features-title">Your UI is <span className="pricing-free-highlight">free.</span><br />Pay only for what runs.</h2>
         <p className="tech-stack-desc">Everything you see — the dashboard, bug fixes, deployments, monitoring — costs you nothing. You only pay for the cloud servers and databases we actually run for you.</p>
+        <div className="pricing-first-month-banner">
+          <strong>First month free.</strong> No credit card required. Cancel anytime.
+        </div>
         <div className="pricing-ui-free-banner">
           <span className="pricing-ui-free-icon">🎉</span>
           <strong>UI, dashboard, monitoring, bug fixes &amp; security audit — all completely free.</strong>
@@ -1013,12 +1016,16 @@ function SignupPage() {
 
         <div className="signup-form">
           <div className="signup-eyebrow">Get started free</div>
-          <h1 className="signup-title">Deploy your app<br />in hours, not days.</h1>
+          <h1 className="signup-title">Deploy your app<br />in minutes, not days.</h1>
           <p className="signup-desc">
             Connect your GitHub and give us read access to your code.
             We&rsquo;ll analyze it, set up your cloud, and get you live —
-            automatically. No technical knowledge needed.
+            automatically. <strong>No technical knowledge needed.</strong>
           </p>
+
+          <div className="signup-free-badge">
+            First month free — no credit card required
+          </div>
 
           <a href={`${API_URL}/auth/github`} className="btn-github-signin">
             <img src="https://upload.wikimedia.org/wikipedia/commons/c/c2/GitHub_Invertocat_Logo.svg" alt="" width={20} height={20} />
@@ -1026,9 +1033,8 @@ function SignupPage() {
           </a>
 
           <div className="signup-perks">
-            <span><span className="perk-check">✓</span> First month free</span>
-            <span><span className="perk-check">✓</span> No credit card required</span>
             <span><span className="perk-check">✓</span> Read-only repository access</span>
+            <span><span className="perk-check">✓</span> Cancel anytime</span>
           </div>
         </div>
       </div>
