@@ -1352,15 +1352,17 @@ function App() {
 
   return (
     <div className={`page${pathname === '/dashboard' ? ' page--app' : ''}`}>
-      <SkyOverlay />
-      <FloatingOrbs />
-      <Particles />
-      <motion.div
-        className="glow"
-        animate={{ scale: [1, 1.15, 1], opacity: [0.5, 0.8, 0.5] }}
-        transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
-      />
-      <div className="grid-bg" />
+      {pathname !== '/dashboard' && <SkyOverlay />}
+      {pathname !== '/dashboard' && <FloatingOrbs />}
+      {pathname !== '/dashboard' && <Particles />}
+      {pathname !== '/dashboard' && (
+        <motion.div
+          className="glow"
+          animate={{ scale: [1, 1.15, 1], opacity: [0.5, 0.8, 0.5] }}
+          transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+        />
+      )}
+      {pathname !== '/dashboard' && <div className="grid-bg" />}
 
       <ScrollToTop />
       {pathname !== '/signup' && pathname !== '/auth/callback' && pathname !== '/dashboard' && <Nav />}
