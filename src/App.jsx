@@ -228,96 +228,152 @@ function FixPanel() {
   )
 }
 
+function SecurityPanel() {
+  return (
+    <div className="mp-panel">
+      <div className="mp-agent-row">
+        <div className="mp-avatar">
+          <CloudLogo width={18} />
+        </div>
+        <div>
+          <div className="mp-agent-name">Anvil Security Agent</div>
+          <div className="mp-agent-sub">Full audit completed on deploy</div>
+        </div>
+      </div>
+
+      <div className="mp-security-list">
+        <div className="mp-sec-item mp-sec-ok"><span className="mp-sec-icon">✓</span>Environment variables secured &amp; encrypted</div>
+        <div className="mp-sec-item mp-sec-ok"><span className="mp-sec-icon">✓</span>No secrets found in source code</div>
+        <div className="mp-sec-item mp-sec-warn">
+          <span className="mp-sec-icon mp-sec-icon--warn">⚠</span>
+          <span>Outdated dependency with known CVE</span>
+          <span className="mp-sec-patch">Auto-patching →</span>
+        </div>
+        <div className="mp-sec-item mp-sec-ok"><span className="mp-sec-icon">✓</span>SSL certificate active &amp; auto-renewing</div>
+        <div className="mp-sec-item mp-sec-ok"><span className="mp-sec-icon">✓</span>CORS &amp; security headers configured</div>
+      </div>
+
+      <div className="mp-card mp-sec-summary">
+        <span className="mp-sec-count mp-sec-count--ok">4 passed</span>
+        <span className="mp-sec-count mp-sec-count--warn">1 auto-patched</span>
+        <span className="mp-sec-count mp-sec-count--crit">0 critical</span>
+        <span className="mp-sec-free">This audit is free</span>
+      </div>
+    </div>
+  )
+}
+
 const DEMO_TABS = [
   { label: 'Ship to Cloud', icon: '☁' },
   { label: 'Monitor',       icon: '📊' },
   { label: 'Fix Bugs',      icon: '🔧' },
+  { label: 'Security Audit', icon: '🔒' },
 ]
-const DEMO_PANELS = [DeployPanel, MonitorPanel, FixPanel]
+const DEMO_PANELS = [DeployPanel, MonitorPanel, FixPanel, SecurityPanel]
 
 function AppMockup() {
   const [tab, setTab] = useState(0)
+  const sectionRef = useRef(null)
   const Panel = DEMO_PANELS[tab]
 
+  useEffect(() => {
+    const onScroll = () => {
+      const el = sectionRef.current
+      if (!el) return
+      const { top, height } = el.getBoundingClientRect()
+      const scrollRange = height - window.innerHeight
+      if (scrollRange <= 0) return
+      const progress = Math.max(0, Math.min(1, -top / scrollRange))
+      const newTab = Math.min(DEMO_TABS.length - 1, Math.floor(progress * DEMO_TABS.length))
+      setTab(newTab)
+    }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    return () => window.removeEventListener('scroll', onScroll)
+  }, [])
+
   return (
-    <section className="mockup-section">
-      <motion.div
-        className="mockup-eyebrow"
-        initial={{ opacity: 0, y: 24 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: '-60px' }}
-        transition={{ duration: 0.6 }}
-      >
-        <span className="features-eyebrow">How it works</span>
-        <h2 className="features-title">Your app, handled<br />end to end</h2>
-        <p className="tech-stack-desc">Share your GitHub link. We take it from there — no setup, no DevOps, no surprises.</p>
-      </motion.div>
+    <div ref={sectionRef} className="mockup-scroll-container">
+      <div className="mockup-sticky-wrap">
+        <section className="mockup-section">
+          <motion.div
+            className="mockup-eyebrow"
+            initial={{ opacity: 0, y: 24 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-60px' }}
+            transition={{ duration: 0.6 }}
+          >
+            <span className="features-eyebrow">Product</span>
+            <h2 className="features-title">Your app, handled<br />end to end</h2>
+            <p className="tech-stack-desc">Share your GitHub link. We take it from there — no setup, no DevOps, no surprises.</p>
+          </motion.div>
 
-      <motion.div
-        className="mockup-frame"
-        initial={{ opacity: 0, y: 48 }}
-        whileInView={{ opacity: 1, y: 0 }}
-        viewport={{ once: true, margin: '-40px' }}
-        transition={{ duration: 0.7, delay: 0.15 }}
-      >
-        <div className="mockup-titlebar">
-          <div className="mockup-wdots">
-            <span className="mockup-wdot wd-red" />
-            <span className="mockup-wdot wd-yellow" />
-            <span className="mockup-wdot wd-green" />
-          </div>
-          <div className="mockup-breadcrumb">
-            <CloudLogo width={14} />
-            <span>my-ai-app</span>
-            <span className="mockup-sep">›</span>
-            <span>Dashboard</span>
-          </div>
-        </div>
+          <motion.div
+            className="mockup-frame"
+            initial={{ opacity: 0, y: 48 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true, margin: '-40px' }}
+            transition={{ duration: 0.7, delay: 0.15 }}
+          >
+            <div className="mockup-titlebar">
+              <div className="mockup-wdots">
+                <span className="mockup-wdot wd-red" />
+                <span className="mockup-wdot wd-yellow" />
+                <span className="mockup-wdot wd-green" />
+              </div>
+              <div className="mockup-breadcrumb">
+                <CloudLogo width={14} />
+                <span>my-ai-app</span>
+                <span className="mockup-sep">›</span>
+                <span>Dashboard</span>
+              </div>
+            </div>
 
-        <div className="mockup-demotabs">
-          {DEMO_TABS.map((t, i) => (
-            <button
-              key={t.label}
-              className={`mockup-demotab${tab === i ? ' mockup-demotab--on' : ''}`}
-              onClick={() => setTab(i)}
-            >
-              {t.icon} {t.label}
-            </button>
-          ))}
-        </div>
+            <div className="mockup-demotabs">
+              {DEMO_TABS.map((t, i) => (
+                <button
+                  key={t.label}
+                  className={`mockup-demotab${tab === i ? ' mockup-demotab--on' : ''}`}
+                  onClick={() => setTab(i)}
+                >
+                  {t.icon} {t.label}
+                </button>
+              ))}
+            </div>
 
-        <div className="mockup-content-wrap">
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={tab}
-              className="mockup-panel-area"
-              initial={{ opacity: 0, y: 6 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -6 }}
-              transition={{ duration: 0.18 }}
-            >
-              <Panel />
-            </motion.div>
-          </AnimatePresence>
+            <div className="mockup-content-wrap">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={tab}
+                  className="mockup-panel-area"
+                  initial={{ opacity: 0, y: 6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -6 }}
+                  transition={{ duration: 0.18 }}
+                >
+                  <Panel />
+                </motion.div>
+              </AnimatePresence>
 
-          {/* Progress nav */}
-          <div className="mockup-progress-nav">
-            {DEMO_TABS.map((t, i) => (
-              <button
-                key={i}
-                className={`mpn-step${tab === i ? ' mpn-step--on' : ''}${i < tab ? ' mpn-step--done' : ''}`}
-                onClick={() => setTab(i)}
-                title={t.label}
-              >
-                <span className="mpn-dot" />
-                <span className="mpn-label">{t.label}</span>
-                {i < DEMO_TABS.length - 1 && <span className="mpn-line" />}
-              </button>
-            ))}
-          </div>
-        </div>
-      </motion.div>
-    </section>
+              {/* Progress nav */}
+              <div className="mockup-progress-nav">
+                {DEMO_TABS.map((t, i) => (
+                  <button
+                    key={i}
+                    className={`mpn-step${tab === i ? ' mpn-step--on' : ''}${i < tab ? ' mpn-step--done' : ''}`}
+                    onClick={() => setTab(i)}
+                    title={t.label}
+                  >
+                    <span className="mpn-dot" />
+                    <span className="mpn-label">{t.label}</span>
+                    {i < DEMO_TABS.length - 1 && <span className="mpn-line" />}
+                  </button>
+                ))}
+              </div>
+            </div>
+          </motion.div>
+        </section>
+      </div>
+    </div>
   )
 }
 
@@ -738,10 +794,23 @@ function Nav({ onCta }) {
       </button>
       <div className="nav-links">
         <button className={`nav-link${pathname === '/' ? ' nav-link--on' : ''}`} onClick={() => navigate('/')}>Home</button>
+        <button className={`nav-link${pathname === '/how-it-works' ? ' nav-link--on' : ''}`} onClick={() => navigate('/how-it-works')}>How it works</button>
         <button className={`nav-link${pathname === '/pricing' ? ' nav-link--on' : ''}`} onClick={() => navigate('/pricing')}>Pricing</button>
         <button className="nav-link nav-link--cta" onClick={onCta}>Get started &rarr;</button>
       </div>
     </nav>
+  )
+}
+
+function HowItWorksPage() {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 24 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <HowItWorks />
+    </motion.div>
   )
 }
 
@@ -854,8 +923,6 @@ function HomePage({ onCta }) {
         </motion.div>
       </main>
 
-      <HowItWorks />
-      <SectionDivider />
       <TechStack />
       <SectionDivider />
       <AppMockup />
@@ -873,6 +940,11 @@ function AnimatedRoutes({ onCta }) {
         <Route path="/" element={
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
             <HomePage onCta={onCta} />
+          </motion.div>
+        } />
+        <Route path="/how-it-works" element={
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.3 }}>
+            <HowItWorksPage />
           </motion.div>
         } />
         <Route path="/pricing" element={

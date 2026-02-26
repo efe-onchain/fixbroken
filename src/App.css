@@ -596,11 +596,26 @@
   box-shadow: 0 0 12px rgba(108,99,255,0.2);
 }
 
+/* ── App Mockup scroll container ── */
+.mockup-scroll-container {
+  height: 280vh;
+  position: relative;
+}
+
+.mockup-sticky-wrap {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
 /* ── App Mockup section ── */
 .mockup-section {
   position: relative;
   z-index: 1;
-  padding: 80px 48px;
+  padding: 48px 48px;
   max-width: 1200px;
   margin: 0 auto;
   width: 100%;
@@ -1039,6 +1054,70 @@
   cursor: pointer;
   font-family: inherit;
   margin-top: 2px;
+}
+
+/* ── Security panel ── */
+.mp-security-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.mp-sec-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  padding: 7px 10px;
+  border-radius: 8px;
+  background: rgba(255,255,255,0.04);
+}
+
+.mp-sec-ok { color: var(--text-primary); }
+.mp-sec-warn { color: #f59e0b; }
+
+.mp-sec-icon {
+  font-size: 13px;
+  color: #22c55e;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.mp-sec-icon--warn { color: #f59e0b; }
+
+.mp-sec-patch {
+  margin-left: auto;
+  font-size: 11px;
+  color: var(--accent);
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.mp-sec-summary {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.mp-sec-count {
+  font-size: 12px;
+  font-weight: 600;
+  padding: 3px 8px;
+  border-radius: 20px;
+}
+
+.mp-sec-count--ok   { background: rgba(34,197,94,0.12);  color: #22c55e; }
+.mp-sec-count--warn { background: rgba(245,158,11,0.12); color: #f59e0b; }
+.mp-sec-count--crit { background: rgba(239,68,68,0.12);  color: #ef4444; }
+
+.mp-sec-free {
+  margin-left: auto;
+  font-size: 11px;
+  color: #22c55e;
+  font-weight: 600;
+  opacity: 0.8;
 }
 
 /* ── Tech stack section ── */
