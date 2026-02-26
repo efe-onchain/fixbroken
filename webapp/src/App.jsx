@@ -1391,7 +1391,7 @@ function App() {
                 &times;
               </button>
 
-              {showAdModal ? (
+              {fromAd ? (
                 <>
                   <div className="modal-ad-badge">From broken to live</div>
                   <h2 className="modal-title modal-ad-title">
@@ -1405,7 +1405,14 @@ function App() {
                     <li><span className="perk-check">✓</span> 24/7 uptime monitoring</li>
                     <li><span className="perk-check">✓</span> Bugs fixed fast, usually within hours</li>
                   </ul>
-                  <p className="modal-ad-cta-label">Let&rsquo;s start</p>
+                  <motion.button
+                    className="btn-primary modal-btn"
+                    onClick={() => { setModalOpen(false); navigate('/signup') }}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
+                  >
+                    Get started →
+                  </motion.button>
                 </>
               ) : (
                 <>
@@ -1413,26 +1420,26 @@ function App() {
                   <p className="modal-desc">
                     Enter your email and we&rsquo;ll get you on the calendar.
                   </p>
+                  <input
+                    className="modal-input"
+                    type="email"
+                    placeholder="you@company.com"
+                    value={email}
+                    onChange={handleEmailChange}
+                    autoFocus
+                    onKeyDown={(e) => e.key === 'Enter' && isValid && handleBook()}
+                  />
+                  <motion.button
+                    className="btn-primary modal-btn"
+                    disabled={!isValid}
+                    onClick={handleBook}
+                    whileHover={isValid ? { scale: 1.02 } : {}}
+                    whileTap={isValid ? { scale: 0.98 } : {}}
+                  >
+                    Book →
+                  </motion.button>
                 </>
               )}
-              <input
-                className="modal-input"
-                type="email"
-                placeholder="you@company.com"
-                value={email}
-                onChange={handleEmailChange}
-                autoFocus
-                onKeyDown={(e) => e.key === 'Enter' && isValid && handleBook()}
-              />
-              <motion.button
-                className="btn-primary modal-btn"
-                disabled={!isValid}
-                onClick={handleBook}
-                whileHover={isValid ? { scale: 1.02 } : {}}
-                whileTap={isValid ? { scale: 0.98 } : {}}
-              >
-                {showAdModal ? 'Get started →' : 'Book →'}
-              </motion.button>
             </motion.div>
           </motion.div>
         )}
