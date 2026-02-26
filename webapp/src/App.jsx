@@ -694,8 +694,33 @@ function HowItWorks() {
         transition={{ duration: 0.6 }}
       >
         <span className="features-eyebrow">How it works</span>
-        <h2 className="features-title">From your code to live —<br />here&rsquo;s exactly what happens</h2>
-        <p className="tech-stack-desc">Written in plain English. No tech jargon. All you need to do is share your GitHub link.</p>
+        <h2 className="features-title">Zero-button deploy.</h2>
+        <p className="tech-stack-desc">Share your GitHub link. Our agent reads your code and handles everything else.</p>
+      </motion.div>
+
+      <motion.div
+        className="hiw-connect-card"
+        initial={{ opacity: 0, y: 24 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-60px' }}
+        transition={{ duration: 0.5 }}
+      >
+        <div className="hiw-connect-step">
+          <div className="hiw-connect-num">01</div>
+          <div className="hiw-connect-line" />
+        </div>
+        <div className="hiw-connect-body">
+          <img
+            src="https://upload.wikimedia.org/wikipedia/commons/c/c2/GitHub_Invertocat_Logo.svg"
+            alt="GitHub"
+            className="hiw-connect-gh-icon"
+          />
+          <div>
+            <h3 className="hiw-connect-title">Connect your GitHub</h3>
+            <p className="hiw-connect-desc">Give us read-only access to your code in one click. No forms, no uploads, no setup wizard. You stay in control the whole time.</p>
+          </div>
+          <div className="hiw-connect-badge">Read-only · Cancel anytime</div>
+        </div>
       </motion.div>
 
       <HowItWorksVisual />

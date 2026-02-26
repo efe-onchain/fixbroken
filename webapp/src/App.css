@@ -2857,6 +2857,93 @@
   transform: translateY(-1px);
 }
 
+/* ── How It Works connect card ───────────────────────────────────────────── */
+.hiw-connect-card {
+  display: flex;
+  gap: 20px;
+  align-items: stretch;
+  max-width: 700px;
+  margin-bottom: 0;
+}
+
+.hiw-connect-step {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  flex-shrink: 0;
+}
+
+.hiw-connect-num {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: white;
+  font-size: 13px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.hiw-connect-line {
+  width: 2px;
+  flex: 1;
+  min-height: 24px;
+  background: linear-gradient(to bottom, var(--accent), rgba(108,99,255,0.1));
+  margin-top: 6px;
+}
+
+.hiw-connect-body {
+  flex: 1;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 24px 28px;
+  display: flex;
+  align-items: flex-start;
+  gap: 18px;
+  margin-bottom: 0;
+}
+
+.hiw-connect-gh-icon {
+  width: 36px;
+  height: 36px;
+  flex-shrink: 0;
+  opacity: 0.85;
+  filter: var(--icon-invert, none);
+}
+
+.hiw-connect-title {
+  font-size: 17px;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 6px;
+}
+
+.hiw-connect-desc {
+  font-size: 14px;
+  color: var(--text-secondary);
+  line-height: 1.65;
+  margin: 0;
+}
+
+.hiw-connect-badge {
+  margin-left: auto;
+  flex-shrink: 0;
+  font-size: 11px;
+  font-weight: 600;
+  color: rgba(108,99,255,0.8);
+  background: rgba(108,99,255,0.08);
+  border: 1px solid rgba(108,99,255,0.2);
+  border-radius: 20px;
+  padding: 4px 12px;
+  white-space: nowrap;
+  align-self: center;
+}
+
 /* ── HowItWorksVisual ────────────────────────────────────────────────────── */
 .hiw-vis-wrap {
   border-radius: 18px;
