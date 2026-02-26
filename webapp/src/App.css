@@ -3667,3 +3667,50 @@
   .domains-section { padding: 64px 20px 80px; }
   .domains-cards { grid-template-columns: 1fr; }
 }
+
+/* ── No CI/CD callout ────────────────────────────────────────────────────── */
+.hiw-no-cicd {
+  max-width: 700px;
+  background: rgba(239,68,68,0.04);
+  border: 1px solid rgba(239,68,68,0.13);
+  border-radius: 16px;
+  padding: 20px 28px;
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.hiw-no-cicd-label {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--text-secondary);
+  opacity: 0.65;
+}
+
+.hiw-no-cicd-items {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.hiw-no-cicd-item {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 13px;
+  color: var(--text-secondary);
+  background: rgba(239,68,68,0.05);
+  border: 1px solid rgba(239,68,68,0.12);
+  border-radius: 20px;
+  padding: 5px 13px;
+}
+
+.hiw-no-cicd-x {
+  color: #ef4444;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 1;
+}

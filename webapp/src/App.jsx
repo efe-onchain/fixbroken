@@ -724,6 +724,33 @@ function HowItWorks() {
       </motion.div>
 
       <HowItWorksVisual />
+
+      <motion.div
+        className="hiw-no-cicd"
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: '-40px' }}
+        transition={{ duration: 0.5, delay: 0.1 }}
+      >
+        <span className="hiw-no-cicd-label">What you'll never have to touch</span>
+        <div className="hiw-no-cicd-items">
+          {[
+            'CI/CD pipeline',
+            'Dockerfile',
+            'Build scripts',
+            'Server config',
+            'Nginx / Apache',
+            'SSH keys',
+            'Environment setup',
+            'Deployment scripts',
+          ].map(item => (
+            <span key={item} className="hiw-no-cicd-item">
+              <span className="hiw-no-cicd-x">×</span>
+              {item}
+            </span>
+          ))}
+        </div>
+      </motion.div>
     </section>
   )
 }
