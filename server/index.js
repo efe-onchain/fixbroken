@@ -69,11 +69,15 @@ app.get('/auth/github/callback', async (req, res) => {
       emails.forEach((e, i) => {
         console.log(`  [${i}] ${e.email} | primary=${e.primary} verified=${e.verified} visibility=${e.visibility}`)
       })
-      const primaryVerified = emails.find(e => e.primary && e.verified)
-      const anyVerified = emails.find(e => e.verified)
-      console.log('[email] primary+verified:', primaryVerified?.email ?? 'none')
-      console.log('[email] any verified:', anyVerified?.email ?? 'none')
-      const picked = primaryVerified || anyVerified
+      const isReal = e => !e.email.includes('github')
+      const primaryVerified     = emails.find(e => e.primary && e.verified && isReal(e))
+      const anyVerified         = emails.find(e => e.verified && isReal(e))
+      const primaryVerifiedGh   = emails.find(e => e.primary && e.verified)
+      const anyVerifiedGh       = emails.find(e => e.verified)
+      console.log('[email] primary+verified (no github):', primaryVerified?.email ?? 'none')
+      console.log('[email] any verified (no github):', anyVerified?.email ?? 'none')
+      console.log('[email] fallback primary+verified:', primaryVerifiedGh?.email ?? 'none')
+      const picked = primaryVerified || anyVerified || primaryVerifiedGh || anyVerifiedGh
       if (picked) email = picked.email
     } catch (err) {
       console.error('[email] Failed to fetch /user/emails:', err.message)
