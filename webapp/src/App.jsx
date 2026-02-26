@@ -1281,6 +1281,7 @@ function AnimatedRoutes() {
 
 function App() {
   const { pathname } = useLocation()
+  const navigate = useNavigate()
   useTheme(pathname)
   const fromAd = new URLSearchParams(window.location.search).get('book') === 'true'
   const [modalOpen, setModalOpen] = useState(() => fromAd)
