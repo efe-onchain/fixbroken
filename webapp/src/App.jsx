@@ -698,51 +698,7 @@ function HowItWorks() {
         <p className="tech-stack-desc">Written in plain English. No tech jargon. All you need to do is share your GitHub link.</p>
       </motion.div>
 
-      <div className="how-timeline">
-        {HOW_PHASES.map((phase, i) => (
-          <Fragment key={phase.num}>
-          <motion.div
-            className="how-phase"
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: '-60px' }}
-            transition={{ duration: 0.55, delay: 0.05 }}
-          >
-            <div className="how-phase-left">
-              <div className="how-phase-num">{phase.num}</div>
-              {i < HOW_PHASES.length - 1 && <div className="how-phase-line" />}
-            </div>
-
-            <div className="how-phase-right">
-              <div className="how-phase-icon"><phase.Icon /></div>
-              <div className="how-phase-header">
-                <h3 className="how-phase-title">{phase.title}</h3>
-                {phase.chips.map(c => (
-                  <span key={c.label} className={`how-chip how-chip--${c.color}`}>{c.label}</span>
-                ))}
-              </div>
-              <p className="how-phase-body">{phase.body}</p>
-
-              {phase.details.length > 0 && (
-                <ul className="how-phase-details">
-                  {phase.details.map(d => (
-                    <li key={d}><span className="how-check">✓</span>{d}</li>
-                  ))}
-                </ul>
-              )}
-
-              {phase.callout && (
-                <div className="how-callout">
-                  <span className="how-callout-icon">💬</span>
-                  {phase.callout}
-                </div>
-              )}
-            </div>
-          </motion.div>
-          {i === 0 && <HowItWorksVisual />}
-          </Fragment>
-        ))}
-      </div>
+      <HowItWorksVisual />
     </section>
   )
 }
