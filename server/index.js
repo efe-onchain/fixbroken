@@ -56,15 +56,19 @@ app.get('/auth/github/callback', async (req, res) => {
     })
     const ghUser = await userRes.json()
 
-    // Fetch primary email if not public
+    // Always fetch verified primary email from /user/emails
+    // (ghUser.email is the public profile email — may be stale or wrong)
     let email = ghUser.email
-    if (!email) {
+    try {
       const emailRes = await fetch('https://api.github.com/user/emails', {
         headers: { Authorization: `Bearer ${access_token}`, 'User-Agent': 'Anvil' },
       })
       const emails = await emailRes.json()
       const primary = emails.find(e => e.primary && e.verified)
-      email = primary ? primary.email : emails[0]?.email
+        || emails.find(e => e.verified)
+      if (primary) email = primary.email
+    } catch {
+      // fall back to profile email
     }
 
     // Log signup
