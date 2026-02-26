@@ -607,15 +607,16 @@
   top: 0;
   height: 100vh;
   display: flex;
-  align-items: center;
-  overflow: hidden;
+  align-items: flex-start;
+  overflow: visible;
+  padding-top: 48px;
 }
 
 /* ── App Mockup section ── */
 .mockup-section {
   position: relative;
   z-index: 1;
-  padding: 48px 48px;
+  padding: 0 48px;
   max-width: 1200px;
   margin: 0 auto;
   width: 100%;
