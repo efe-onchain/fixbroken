@@ -2443,6 +2443,7 @@
 .page--app {
   overflow: hidden;
   height: 100vh;
+  padding-bottom: 0;
 }
 
 .db-layout {
