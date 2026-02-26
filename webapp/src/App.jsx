@@ -1058,7 +1058,7 @@ function AuthCallbackPage() {
         email: payload.email,
         avatar: payload.avatar,
       }))
-      navigate('/')
+      navigate('/dashboard')
     } catch {
       navigate('/signup?error=1')
     }
@@ -1095,10 +1095,21 @@ function Nav() {
         <button className={`nav-link${pathname === '/how-it-works' ? ' nav-link--on' : ''}`} onClick={() => navigate('/how-it-works')}>How it works</button>
         <button className={`nav-link${pathname === '/pricing' ? ' nav-link--on' : ''}`} onClick={() => navigate('/pricing')}>Pricing</button>
         {user ? (
-          <button className="nav-user" onClick={() => navigate('/')}>
-            <img src={user.avatar} alt={user.name || user.login} className="nav-avatar" />
-            <span className="nav-user-name">{user.name || user.login}</span>
-          </button>
+          <div className="nav-user-wrap">
+            <button className="nav-user">
+              <img src={user.avatar} alt={user.name || user.login} className="nav-avatar" />
+              <span className="nav-user-name">{user.name || user.login}</span>
+            </button>
+            <div className="nav-user-dropdown">
+              <button className="nav-dropdown-item" onClick={() => navigate('/dashboard')}>Dashboard</button>
+              <button className="nav-dropdown-item nav-dropdown-item--danger" onClick={() => {
+                localStorage.removeItem('anvil_token')
+                localStorage.removeItem('anvil_user')
+                navigate('/')
+                window.location.reload()
+              }}>Sign out</button>
+            </div>
+          </div>
         ) : (
           <button className="nav-link nav-link--cta" onClick={() => navigate('/signup')}>Get started &rarr;</button>
         )}
@@ -1237,6 +1248,60 @@ function HomePage() {
   )
 }
 
+function DashboardPage() {
+  const navigate = useNavigate()
+  const user = useAuth()
+
+  useEffect(() => {
+    if (!user) navigate('/signup')
+  }, [user, navigate])
+
+  if (!user) return null
+
+  const signOut = () => {
+    localStorage.removeItem('anvil_token')
+    localStorage.removeItem('anvil_user')
+    navigate('/')
+  }
+
+  return (
+    <motion.div
+      className="dashboard-page"
+      initial={{ opacity: 0, y: 24 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      <div className="dashboard-card">
+        <img src={user.avatar} alt={user.name || user.login} className="dashboard-avatar" />
+        <h2 className="dashboard-greeting">Hi, {user.name || user.login}.</h2>
+
+        <img
+          src="https://placedog.net/400/280?id=85"
+          alt="Sorry dog"
+          className="dashboard-sorry-dog"
+        />
+
+        <div className="dashboard-capacity-badge">At capacity</div>
+
+        <h3 className="dashboard-title">We&rsquo;re heads-down on current projects.</h3>
+        <p className="dashboard-desc">
+          We&rsquo;ll notify you at <strong>{user.email || `@${user.login}`}</strong> the
+          moment our agent is ready to take on new work. You&rsquo;re in the queue —
+          we&rsquo;ll be in touch soon.
+        </p>
+
+        <div className="dashboard-checklist">
+          <div className="dashboard-check-item"><span className="dashboard-check">✓</span>Account created</div>
+          <div className="dashboard-check-item dashboard-check-item--pending"><span className="dashboard-check-pending">○</span>Agent assigned to your project</div>
+          <div className="dashboard-check-item dashboard-check-item--pending"><span className="dashboard-check-pending">○</span>Deployment kicks off</div>
+        </div>
+
+        <button className="dashboard-signout" onClick={signOut}>Sign out</button>
+      </div>
+    </motion.div>
+  )
+}
+
 function AnimatedRoutes() {
   const location = useLocation()
   const navigate = useNavigate()
@@ -1260,6 +1325,7 @@ function AnimatedRoutes() {
         } />
         <Route path="/signup" element={<SignupPage />} />
         <Route path="/auth/callback" element={<AuthCallbackPage />} />
+        <Route path="/dashboard" element={<DashboardPage />} />
       </Routes>
     </AnimatePresence>
   )
