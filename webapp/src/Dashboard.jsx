@@ -104,7 +104,6 @@ export default function DashboardPage() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <img src={user.avatar} alt={user.name || user.login} className="db-status-avatar" />
             <h2 className="db-status-greeting">Hi, {user.name || user.login}.</h2>
 
             <img
